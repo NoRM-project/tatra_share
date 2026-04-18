@@ -1,3 +1,7 @@
+import MobileFooter from "../MobileFooter";
+
 export default function TransactionsListPage() {
-    return <h1>TransactionsListPage</h1>
+    return <>
+        <MobileFooter/>
+    </>
 }
