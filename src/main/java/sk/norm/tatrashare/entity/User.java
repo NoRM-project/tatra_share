@@ -13,7 +13,7 @@ public class User {
     @Id
     private Long id;
     @Column(name = "full_name", nullable = false)
-    private String full_name;
+    private String fullName;
     @Column(nullable = false, unique = true)
     private String iban;
 }

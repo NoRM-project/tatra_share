@@ -1,12 +1,5 @@
 API:
 
-POST /api/users
-Payload
-{
-    full_name: "Name Surname",
-    iban: "SK 1234 1234 1234 1234"
-}
-
 GET /api/users
 Response
 [
@@ -16,6 +9,19 @@ Response
         iban: "SK 1234 1234 1234 1234"
     }
 ]
+
+POST /api/users
+Payload
+{
+    full_name: "Name Surname",
+    iban: "SK 1234 1234 1234 1234"
+}
+Response:
+{
+    id: 1
+    full_name: "Name Surname",
+    iban: "SK 1234 1234 1234 1234"
+}
 
 GET /api/groups
 Response:
@@ -33,6 +39,13 @@ Payload
 {
     name: "My group",
     member_ids: [1, 2, 3],
+}
+Response:
+{
+    id: 1,
+    name: "My group",
+    members_count: 67
+    user_balance: -10.00,
 }
 
 # paid by is hardcoded for mvp
@@ -66,6 +79,25 @@ Payload
     description: "Transaction description",
     amount: 10.00,
     beneficiary_ids: [1, 2, 3],
+}
+Response:
+{
+    id: 1,
+    name: "Transaction name",
+    description: "Transaction description"
+    paid_by: {
+        id: 1,
+        full_name: "Name Surname",
+        iban: "SK 1234 1234 1234 1234",
+    }
+    amount: 10.00,
+    beneficiaries: [
+        {
+            id: 1,
+            full_name: "Name Surname",
+            iban: "SK 1234 1234 1234 1234",
+        }, ...
+    ],
 }
 
 GET /api/groups/{group-id}/transactions/{transaction-id}
@@ -104,6 +136,14 @@ Payload:
 {
     member_ids: [1, 2, 3],
 }
+Response:
+[
+    {
+        id: 1,
+        full_name: "Name Surname",
+        iban: "SK 1234 1234 1234 1234",
+    }, ...
+]
 
 # If amount > 0 - debt to me, else that is my debt to user
 GET /api/groups/{group-id}/report

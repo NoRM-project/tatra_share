@@ -4,7 +4,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import sk.norm.tatrashare.entity.User;
 import sk.norm.tatrashare.repository.UserRepository;
-import sk.norm.tatrashare.service.UserService;
 
 import java.util.List;
 
@@ -28,5 +27,12 @@ public class UserService {
 
     public User getUserById(int id) {
         return userRepository.findById((long) id).orElse(null);
+    }
+
+    public User createUser(String fullName, String iban) {
+        User user = new User();
+        user.setFullName(fullName);
+        user.setIban(iban);
+        return userRepository.save(user);
     }
 }

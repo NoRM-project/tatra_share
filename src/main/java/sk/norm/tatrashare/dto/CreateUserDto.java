@@ -1,0 +1,11 @@
+package sk.norm.tatrashare.dto;
+
+import com.fasterxml.jackson.annotation.JsonProperty;
+import lombok.Data;
+
+@Data
+public class CreateUserDto {
+    @JsonProperty("full_name")
+    private String fullName;
+    private String iban;
+}
