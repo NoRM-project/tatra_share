@@ -1,8 +1,12 @@
 package sk.norm.tatrashare.entity;
 
 import jakarta.persistence.*;
+import org.hibernate.annotations.CreationTimestamp;
 import lombok.Getter;
 import lombok.Setter;
+
+import java.math.BigDecimal;
+import java.time.LocalDateTime;
 
 @Table(name = "\"transaction\"")
 @Entity
@@ -29,5 +33,9 @@ public class Transaction {
     private String description;
 
     @Column(nullable = false)
-    private Long amount;
+    private BigDecimal amount;
+
+    @CreationTimestamp
+    @Column(name = "created_at", nullable = false, updatable = false)
+    private LocalDateTime createdAt;
 }

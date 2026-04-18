@@ -7,6 +7,7 @@ import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 @Getter
@@ -18,7 +19,7 @@ public class CreateTransactionRequest {
     private String description;
 
     @NotNull
-    private Long amount;
+    private BigDecimal amount;
 
     @NotEmpty
     @JsonProperty("beneficiary_ids")

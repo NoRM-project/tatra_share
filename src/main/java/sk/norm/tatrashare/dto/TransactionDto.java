@@ -4,6 +4,8 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.math.BigDecimal;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Getter
@@ -16,7 +18,11 @@ public class TransactionDto {
     @JsonProperty("paid_by")
     private TransactionUserDto paidBy;
 
-    private Long amount;
+    private BigDecimal amount;
+
+    @JsonProperty("created_at")
+    private LocalDateTime createdAt;
+
     private List<TransactionUserDto> beneficiaries;
 }
 

@@ -56,6 +56,7 @@ Response:
         id: 1,
         name: "Transaction name",
         description: "Transaction description"
+        created_at: "2026-04-01T10:15:00",
         paid_by: {
             id: 1,
             full_name: "Name Surname",
@@ -85,6 +86,7 @@ Response:
     id: 1,
     name: "Transaction name",
     description: "Transaction description"
+    created_at: "2026-04-01T10:15:00",
     paid_by: {
         id: 1,
         full_name: "Name Surname",
@@ -106,6 +108,7 @@ Response:
     id: 1,
     name: "Transaction name",
     description: "Transaction description"
+    created_at: "2026-04-01T10:15:00",
     paid_by: {
         id: 1,
         full_name: "Name Surname",
@@ -134,27 +137,32 @@ Response:
 POST /api/groups/{group-id}/members
 Payload:
 {
-    member_ids: [1, 2, 3],
+    full_name: "Name Surname",
+    iban: "SK 1234 1234 1234 1234"
 }
 Response:
-[
-    {
-        id: 1,
-        full_name: "Name Surname",
-        iban: "SK 1234 1234 1234 1234",
-    }, ...
-]
+{
+    id: 1,
+    full_name: "Name Surname",
+    iban: "SK 1234 1234 1234 1234",
+}
+
+Errors:
+- If no user exists with the given `iban`, or if `full_name` does not match that user -> error "User not found".
+
+Note:
+- Group membership operations are performed as the current (simulated authenticated) user.
 
 # If amount > 0 - debt to me, else that is my debt to user
 GET /api/groups/{group-id}/report
 Response:
 {
-    liability: 10,
-    receivable: 30,
-    difference: 20,
+    liability: 10.00,
+    receivable: 30.00,
+    difference: 20.00,
     balances: [
         {
-            amount: 10
+            amount: 10.00
             member: {
                 id: 1,
                 full_name: "Name Surname",

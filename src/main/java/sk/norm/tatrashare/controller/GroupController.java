@@ -2,9 +2,14 @@ package sk.norm.tatrashare.controller;
 
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
+import sk.norm.tatrashare.auth.CurrentUserProvider;
 import sk.norm.tatrashare.dto.CreateGroupRequest;
 import sk.norm.tatrashare.dto.GroupDto;
+import sk.norm.tatrashare.entity.User;
+import sk.norm.tatrashare.repository.UserRepository;
 import sk.norm.tatrashare.service.GroupService;
 
 import java.util.List;
@@ -15,15 +20,21 @@ import java.util.List;
 public class GroupController {
 
     private final GroupService groupService;
+    private final CurrentUserProvider currentUserProvider;
+    private final UserRepository userRepository;
 
     @GetMapping
-    public List<GroupDto> getAllGroups() {
-        return groupService.getAllGroups();
+    public List<GroupDto> getGroupsByCurrentUser() {
+        Long currentUserId = currentUserProvider.getCurrentUserId();
+        return groupService.getGroupsByUserId(currentUserId);
     }
 
     @PostMapping
     public GroupDto createGroup(@RequestBody @Valid CreateGroupRequest request) {
-        return groupService.createGroup(request);
+        Long currentUserId = currentUserProvider.getCurrentUserId();
+        User user = userRepository.findById(currentUserId)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST, "Current user not found"));
+        return groupService.createGroup(request.getName(), request.getMemberIds(), user);
     }
 
 

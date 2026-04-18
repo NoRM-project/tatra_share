@@ -1,5 +1,6 @@
 package sk.norm.tatrashare.entity;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -14,7 +15,10 @@ import java.util.List;
 public class User {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @JsonProperty("full_name")
     @Column(name = "full_name", nullable = false)
     private String fullName;
     @Column(nullable = false, unique = true)

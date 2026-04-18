@@ -1,11 +1,20 @@
 package sk.norm.tatrashare.dto;
 
-import lombok.Data;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import lombok.Getter;
+import lombok.Setter;
 
-@Data
+import java.math.BigDecimal;
+
+@Getter
+@Setter
 public class GroupDto {
-    private int id;
+    private Long id;
     private String name;
+
+    @JsonProperty("members_count")
     private int membersCount;
-    private float userBalance;
+
+    @JsonProperty("user_balance")
+    private BigDecimal userBalance;
 }
