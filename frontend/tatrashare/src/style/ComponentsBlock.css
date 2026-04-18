@@ -1,0 +1,21 @@
+.componentBlock {
+  padding: 16px;
+  gap: 8px;
+  background-color: #1e1e1e;
+}
+
+.componentBlockHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.componentBlockHeader h2 {
+  font-size: 18px;
+  font-weight: 600;
+}
+
+.componentBlockContent {
+  display: flex;
+  flex-direction: column;
+}
