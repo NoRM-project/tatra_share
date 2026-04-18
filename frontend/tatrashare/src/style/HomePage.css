@@ -1,0 +1,59 @@
+.promo {
+  padding: 0 16px;
+}
+
+.promoCard {
+  background: #e76a5a;
+  border-radius: 16px;
+  padding: 16px;
+}
+
+.promoAmount {
+  font-size: 32px;
+  font-weight: bold;
+}
+
+.section {
+  padding: 16px;
+}
+
+.rowBetween {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.label {
+  font-size: 12px;
+}
+
+.accountCard {
+  background: #1a1d23;
+  border-radius: 16px;
+  padding: 16px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.chartMock {
+  width: 80px;
+  height: 40px;
+  background: linear-gradient(to top, #00ff99, transparent);
+  border-radius: 8px;
+}
+
+.cardMock {
+  height: 180px;
+  border-radius: 16px;
+  background: linear-gradient(135deg, #4facfe, #00f2fe);
+  margin: 16px 0;
+}
+
+.cardNumber {
+  color: #aaa;
+}
+
+.link {
+  color: #4da3ff;
+  font-size: 14px;
+}
