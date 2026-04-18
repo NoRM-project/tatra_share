@@ -5,6 +5,7 @@ import GroupsPage from "./components/pages/GroupsPage"
 import NewGroupPage from "./components/pages/NewGroupPage"
 import TransactionPage from "./components/pages/TransactionPage"
 import GroupTransactionDetailPage from "./components/pages/GroupTransactionDetailPage"
+import GroupDetailedPage from "./components/pages/GroupDetailedPage"
 
 function App() {
     return (
@@ -16,6 +17,7 @@ function App() {
                 <Route path="/newgroup" element={<NewGroupPage/>} />
                 <Route path="/transactiondetail" element={<TransactionPage/>} />
                 <Route path="/grouptransactiondetail" element={<GroupTransactionDetailPage/>} />
+                <Route path="/groups/:groupId" element={<GroupDetailedPage />} />
             </Routes>
         </BrowserRouter>
     )
