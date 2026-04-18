@@ -6,6 +6,7 @@ import NewGroupPage from "./components/pages/NewGroupPage"
 import TransactionPage from "./components/pages/TransactionPage"
 import GroupTransactionDetailPage from "./components/pages/GroupTransactionDetailPage"
 import GroupDetailedPage from "./components/pages/GroupDetailedPage"
+import ShareTransactions from "./components/pages/ShareTransactions"
 
 function App() {
     return (
@@ -18,6 +19,7 @@ function App() {
                 <Route path="/transactiondetail" element={<TransactionPage/>} />
                 <Route path="/grouptransactiondetail" element={<GroupTransactionDetailPage/>} />
                 <Route path="/groups/:groupId" element={<GroupDetailedPage />} />
+                <Route path="/sharetransaction" element={<ShareTransactions/>} />
             </Routes>
         </BrowserRouter>
     )
