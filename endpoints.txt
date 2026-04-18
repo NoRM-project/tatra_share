@@ -1,0 +1,125 @@
+API:
+
+POST /api/users
+Payload
+{
+    full_name: "Name Surname",
+    iban: "SK 1234 1234 1234 1234"
+}
+
+GET /api/users
+Response
+[
+    {
+        id: 1
+        full_name: "Name Surname",
+        iban: "SK 1234 1234 1234 1234"
+    }
+]
+
+GET /api/groups
+Response:
+[
+    {
+        id: 1,
+        name: "My group",
+        members_count: 67
+        user_balance: -10.00,
+    }, ...
+]
+
+POST /api/groups
+Payload
+{
+    name: "My group",
+    member_ids: [1, 2, 3],
+}
+
+# paid by is hardcoded for mvp
+GET /api/groups/{group-id}/transactions
+Response:
+[
+    {
+        id: 1,
+        name: "Transaction name",
+        description: "Transaction description"
+        paid_by: {
+            id: 1,
+            full_name: "Name Surname",
+            iban: "SK 1234 1234 1234 1234",
+        }
+        amount: 10.00,
+        beneficiaries: [
+            {
+                id: 1,
+                full_name: "Name Surname",
+                iban: "SK 1234 1234 1234 1234",
+            }, ...
+        ],
+    }, ...
+]
+
+POST /api/groups/{group-id}/transactions
+Payload
+{
+    name: "Transaction name",
+    description: "Transaction description",
+    amount: 10.00,
+    beneficiary_ids: [1, 2, 3],
+}
+
+GET /api/groups/{group-id}/transactions/{transaction-id}
+Response:
+{
+    id: 1,
+    name: "Transaction name",
+    description: "Transaction description"
+    paid_by: {
+        id: 1,
+        full_name: "Name Surname",
+        iban: "SK 1234 1234 1234 1234",
+    }
+    amount: 10.00,
+    beneficiaries: [
+        {
+            id: 1,
+            full_name: "Name Surname",
+            iban: "SK 1234 1234 1234 1234",
+        }, ...
+    ],
+}
+
+GET /api/groups/{group-id}/members
+Response:
+[
+    {
+        id: 1,
+        full_name: "Name Surname",
+        iban: "SK 1234 1234 1234 1234",
+    }, ...
+]
+
+POST /api/groups/{group-id}/members
+Payload:
+{
+    member_ids: [1, 2, 3],
+}
+
+# If amount > 0 - debt to me, else that is my debt to user
+GET /api/groups/{group-id}/report
+Response:
+{
+    liability: 10,
+    receivable: 30,
+    difference: 20,
+    balances: [
+        {
+            amount: 10
+            member: {
+                id: 1,
+                full_name: "Name Surname",
+                iban: "SK 1234 1234 1234 1234",
+            }
+        }, ...
+    ],
+}
