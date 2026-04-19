@@ -11,7 +11,7 @@ export default function GroupContainer({
   members,
   amount,
 }: GroupContainerProps) {
-  const isPositive = amount > 0;
+  const amountClass = amount === 0 ? "neutral" : amount > 0 ? "positive" : "negative";
 
   return (
     <div className="groupContainer">
@@ -20,7 +20,7 @@ export default function GroupContainer({
         <p className="groupMembers">Members ({members})</p>
       </div>
 
-      <div className={`groupAmount ${isPositive ? "positive" : "negative"}`}>
+      <div className={`groupAmount ${amountClass}`}>
         {amount.toFixed(2)} EUR
       </div>
     </div>

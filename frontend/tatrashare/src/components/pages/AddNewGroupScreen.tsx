@@ -1,82 +1,142 @@
-import { useMemo, useState } from "react";
-import { CircleQuestionMark, ChevronLeft } from "lucide-react";
+import { useEffect, useMemo, useState } from "react";
+import { ChevronLeft, CircleQuestionMark } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import MobileHeader from "../MobileHeader";
 import Button from "../Button";
-import MemberContainer from "../MemberContainer";
+import Avatar from "../Avatar";
+import { groupApi, userApi } from "../../axios/api";
+import type { User } from "../../axios/api";
 import "../../style/GroupTransactionCreatePage.css";
 import "../../style/AddNewGroupScreen.css";
-
-type TabKey = "create";
-
-type MemberItem = {
-  id: string;
-  fullName: string;
-  iban: string;
-};
-
-const initialMembers: MemberItem[] = [
-  {
-    id: "1",
-    fullName: "Janko Hraska",
-    iban: "SK88 8888 8888 8888 8888 8888",
-  },
-  {
-    id: "2",
-    fullName: "Jon Doe",
-    iban: "SK88 8888 8888 8888 8888 8888",
-  },
-  {
-    id: "3",
-    fullName: "Lala Lulu",
-    iban: "SK88 8888 8888 8888 8888 8888",
-  },
-  {
-    id: "4",
-    fullName: "Miro Placeholder",
-    iban: "SK88 8888 8888 8888 8888 8888",
-  },
-];
 
 export default function AddNewGroupScreen() {
   const navigate = useNavigate();
 
-  const [activeTab] = useState<TabKey>("create");
+  // ── data ──────────────────────────────────────────────────────────────────
+  const [allUsers, setAllUsers] = useState<User[]>([]);
+  const [loadingUsers, setLoadingUsers] = useState(true);
+  const [loadError, setLoadError] = useState<string | null>(null);
 
+  // ── group form ─────────────────────────────────────────────────────────────
   const [groupName, setGroupName] = useState("");
-  const [memberIban, setMemberIban] = useState("");
-  const [memberName, setMemberName] = useState("");
-  const [members, setMembers] = useState<MemberItem[]>(initialMembers);
 
-  const canAddMember = useMemo(() => {
-    return memberIban.trim().length > 0 && memberName.trim().length > 0;
-  }, [memberIban, memberName]);
+  // ── friends selection ─────────────────────────────────────────────────────
+  const [friendSearch, setFriendSearch] = useState("");
+  const [selectedIds, setSelectedIds] = useState<Set<number>>(new Set());
 
-  function handleJoinExists() {
-    // TODO: implement join-existing screen when backend flow is ready
-    navigate("/groups/join");
+  // ── manual add by name + IBAN ─────────────────────────────────────────────
+  const [manualName, setManualName] = useState("");
+  const [manualIban, setManualIban] = useState("");
+  const [manualError, setManualError] = useState<string | null>(null);
+  const [manualSuccess, setManualSuccess] = useState<string | null>(null);
+
+  // ── submit ─────────────────────────────────────────────────────────────────
+  const [submitting, setSubmitting] = useState(false);
+  const [submitError, setSubmitError] = useState<string | null>(null);
+
+  // ── load users (simulated friends list) ───────────────────────────────────
+  useEffect(() => {
+    let mounted = true;
+
+    async function loadUsers() {
+      try {
+        const res = await userApi.getAllUsers();
+        if (!mounted) return;
+        setAllUsers(res.data);
+      } catch (err: unknown) {
+        if (!mounted) return;
+        const msg = err instanceof Error ? err.message : String(err);
+        setLoadError(msg || "Failed to load users");
+      } finally {
+        if (mounted) setLoadingUsers(false);
+      }
+    }
+
+    loadUsers();
+    return () => { mounted = false; };
+  }, []);
+
+  // ── filtered friends (search) ─────────────────────────────────────────────
+  const filteredUsers = useMemo(() => {
+    const q = friendSearch.trim().toLowerCase();
+    if (!q) return allUsers;
+    return allUsers.filter(
+      (u) =>
+        u.full_name.toLowerCase().includes(q) ||
+        u.iban.toLowerCase().includes(q)
+    );
+  }, [allUsers, friendSearch]);
+
+  function toggleUser(id: number) {
+    setSelectedIds((prev) => {
+      const next = new Set(prev);
+      if (next.has(id)) next.delete(id); else next.add(id);
+      return next;
+    });
   }
 
-  function handleAddMember() {
-    if (!canAddMember) return;
+  // ── manual add ────────────────────────────────────────────────────────────
+  const canManualAdd = manualName.trim().length > 0 && manualIban.trim().length > 0;
 
-    setMembers((prev) => [
-      ...prev,
-      {
-        id: String(Date.now()),
-        fullName: memberName.trim(),
-        iban: memberIban.trim(),
-      },
-    ]);
+  function handleManualAdd() {
+    if (!canManualAdd) return;
 
-    setMemberIban("");
-    setMemberName("");
+    setManualError(null);
+    setManualSuccess(null);
+
+    const name = manualName.trim();
+    const iban = manualIban.trim();
+
+    const match = allUsers.find(
+      (u) =>
+        u.full_name.toLowerCase() === name.toLowerCase() &&
+        u.iban.replace(/\s+/g, "").toLowerCase() ===
+          iban.replace(/\s+/g, "").toLowerCase()
+    );
+
+    if (!match) {
+      setManualError("User not found. Make sure the name and IBAN match exactly.");
+      return;
+    }
+
+    if (selectedIds.has(match.id)) {
+      setManualError("This user is already added.");
+      return;
+    }
+
+    setSelectedIds((prev) => new Set([...prev, match.id]));
+    setManualSuccess(`${match.full_name} added successfully.`);
+    setManualName("");
+    setManualIban("");
   }
 
-  function handleCreateGroup() {
-    // TODO: wire create-group API call
-    // Keeping this stub so the screen can be connected later without refactor.
-    void groupName;
+  // ── selected users list (for summary) ────────────────────────────────────
+  const selectedUsers = useMemo(
+    () => allUsers.filter((u) => selectedIds.has(u.id)),
+    [allUsers, selectedIds]
+  );
+
+  const canCreate = groupName.trim().length > 0 && selectedIds.size > 0;
+
+  // ── create group ──────────────────────────────────────────────────────────
+  async function handleCreateGroup() {
+    if (!canCreate) return;
+
+    setSubmitting(true);
+    setSubmitError(null);
+
+    try {
+      await groupApi.createGroup({
+        name: groupName.trim(),
+        member_ids: [...selectedIds],
+      });
+      navigate("/groups");
+    } catch (err: unknown) {
+      const msg = err instanceof Error ? err.message : String(err);
+      setSubmitError(msg || "Failed to create group");
+    } finally {
+      setSubmitting(false);
+    }
   }
 
   return (
@@ -90,26 +150,23 @@ export default function AddNewGroupScreen() {
           />
         }
         center={<span className="addGroupHeaderTitle">Add new group</span>}
-        right={<Button hasBackground={false} icon={<CircleQuestionMark color="#4da3ff" />} />}
+        right={
+          <Button
+            hasBackground={false}
+            icon={<CircleQuestionMark color="#4da3ff" />}
+          />
+        }
       />
 
-      <div className="addGroupTabs">
-        <button
-          type="button"
-          className={`addGroupTab ${activeTab === "create" ? "isActive" : ""}`}
-        >
-          Create new
-        </button>
-
-        <button type="button" className="addGroupTab" onClick={handleJoinExists}>
-          Join exist
-        </button>
-      </div>
-
       <main className="addGroupContent">
+        {/* ── submit error ── */}
+        {submitError && (
+          <div className="groupTransactionError">{submitError}</div>
+        )}
+
+        {/* ── group name ── */}
         <section className="transactionSection">
           <h3 className="transactionSectionTitle">Group details</h3>
-
           <div className="transactionForm">
             <input
               className="transactionInput"
@@ -121,57 +178,158 @@ export default function AddNewGroupScreen() {
           </div>
         </section>
 
+        {/* ── friends selection ── */}
         <section className="transactionSection">
-          <div className="addGroupSectionHeader">
-            <h3 className="transactionSectionTitle">Member details</h3>
-            <button type="button" className="addGroupInlineAction">
-              Scan IBAN/QR code
-            </button>
-          </div>
+          <h3 className="transactionSectionTitle">
+            ADD MEMBERS ({selectedIds.size} selected)
+          </h3>
 
           <div className="transactionForm">
             <input
               className="transactionInput"
               type="text"
-              placeholder="IBAN/Foreign account number"
-              value={memberIban}
-              onChange={(e) => setMemberIban(e.target.value)}
+              placeholder="Search by name or IBAN…"
+              value={friendSearch}
+              onChange={(e) => setFriendSearch(e.target.value)}
+            />
+          </div>
+
+          <div className="addGroupFriendsListWrap">
+            {loadingUsers && (
+              <p className="addGroupStateText">Loading users…</p>
+            )}
+
+            {loadError && (
+              <p className="addGroupErrorText">{loadError}</p>
+            )}
+
+            {!loadingUsers && !loadError && filteredUsers.length === 0 && (
+              <p className="addGroupStateText">No users found.</p>
+            )}
+
+            {!loadingUsers && !loadError && (
+              <div className="beneficiariesList">
+                {filteredUsers.map((user) => {
+                  const checked = selectedIds.has(user.id);
+                  return (
+                    <label
+                      key={user.id}
+                      className={`beneficiaryCard ${checked ? "isSelected" : ""}`}
+                    >
+                      <div className="beneficiaryLeft">
+                        <Avatar name={user.full_name} />
+                        <div className="beneficiaryInfo">
+                          <div className="beneficiaryName">{user.full_name}</div>
+                          <div className="beneficiaryIban">{user.iban}</div>
+                        </div>
+                      </div>
+
+                      <input
+                        className="beneficiaryCheckbox"
+                        type="checkbox"
+                        checked={checked}
+                        onChange={() => toggleUser(user.id)}
+                      />
+                      <span className="beneficiaryFakeCheckbox" />
+                    </label>
+                  );
+                })}
+              </div>
+            )}
+          </div>
+        </section>
+
+        {/* ── manual add by name + IBAN ── */}
+        <section className="transactionSection">
+          <h3 className="transactionSectionTitle">Add by name &amp; IBAN</h3>
+          <p className="addGroupSectionNote">
+            Enter the exact full name and IBAN of an existing user to add them.
+          </p>
+
+          <div className="transactionForm">
+            <input
+              className="transactionInput"
+              type="text"
+              placeholder="Full name"
+              value={manualName}
+              onChange={(e) => {
+                setManualName(e.target.value);
+                setManualError(null);
+                setManualSuccess(null);
+              }}
             />
 
             <input
               className="transactionInput"
               type="text"
-              placeholder="Member name"
-              value={memberName}
-              onChange={(e) => setMemberName(e.target.value)}
+              placeholder="IBAN (e.g. SK88 8888 8888 8888 8888 8888)"
+              value={manualIban}
+              onChange={(e) => {
+                setManualIban(e.target.value);
+                setManualError(null);
+                setManualSuccess(null);
+              }}
             />
+
+            {manualError && (
+              <p className="addGroupErrorText">{manualError}</p>
+            )}
+            {manualSuccess && (
+              <p className="addGroupSuccessText">{manualSuccess}</p>
+            )}
 
             <div className="addGroupCenteredAction">
               <Button
                 hasBackground={false}
                 text="Add member"
-                onClick={handleAddMember}
-                disabled={!canAddMember}
+                onClick={handleManualAdd}
+                disabled={!canManualAdd}
               />
             </div>
           </div>
         </section>
 
-        <section className="addGroupMembersSection">
-          <h3 className="addGroupMembersTitle">MEMBERS({members.length})</h3>
+        {/* ── selected summary ── */}
+        {selectedUsers.length > 0 && (
+          <section className="addGroupMembersSection">
+            <h3 className="addGroupMembersTitle">
+              MEMBERS ({selectedUsers.length})
+            </h3>
 
-          <div className="addGroupMembersList">
-            {members.map((m) => (
-              <MemberContainer key={m.id} fullName={m.fullName} iban={m.iban} isReport={false} />
-            ))}
-          </div>
-        </section>
+            <div className="addGroupMembersList">
+              {selectedUsers.map((u) => (
+                <div key={u.id} className="addGroupSelectedMember">
+                  <div className="beneficiaryLeft">
+                    <Avatar name={u.full_name} />
+                    <div className="beneficiaryInfo">
+                      <div className="beneficiaryName">{u.full_name}</div>
+                      <div className="beneficiaryIban">{u.iban}</div>
+                    </div>
+                  </div>
+                  <button
+                    type="button"
+                    className="addGroupRemoveBtn"
+                    onClick={() => toggleUser(u.id)}
+                    aria-label={`Remove ${u.full_name}`}
+                  >
+                    ✕
+                  </button>
+                </div>
+              ))}
+            </div>
+          </section>
+        )}
       </main>
 
       <div className="addGroupBottomBar">
-        <Button text="Create group" className="buttonFullWidth" onClick={handleCreateGroup} />
+        <button
+          className="transactionSubmitButton"
+          onClick={handleCreateGroup}
+          disabled={!canCreate || submitting}
+        >
+          {submitting ? "Creating…" : "Create group"}
+        </button>
       </div>
     </div>
   );
 }
-
