@@ -2,12 +2,7 @@ package sk.norm.tatrashare.controller;
 
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import sk.norm.tatrashare.auth.CurrentUserProvider;
 import sk.norm.tatrashare.dto.AddGroupMemberRequest;
 import sk.norm.tatrashare.dto.TransactionUserDto;
@@ -18,6 +13,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/groups/{groupId}/members")
 @RequiredArgsConstructor
+@CrossOrigin(origins = "http://localhost:5175")
 public class GroupMemberController {
 
     private final GroupUserService groupUserService;
