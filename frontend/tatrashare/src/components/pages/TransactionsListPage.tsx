@@ -87,7 +87,7 @@ export default function TransactionsListPage() {
   return (
     <div className="transactionsPage">
       <MobileHeader
-        left={<ArrowWithText label="Tranzactions"/>}
+        left={<ArrowWithText label="Transactions"/>}
         right={
           <button className="headerIconButton" type="button" aria-label="Search transactions">
             <Search size={22} strokeWidth={1.8} />

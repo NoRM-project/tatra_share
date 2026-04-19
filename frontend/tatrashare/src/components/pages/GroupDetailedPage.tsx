@@ -21,6 +21,7 @@ export default function GroupDetailedPage() {
     type GroupDetailedLocationState = {
         selectedGroup?: GroupDto;
         openTransactionAfterSelect?: boolean;
+        activeTab?: "report" | "members" | "transactions";
     };
 
     const locationState = useMemo(() => {
@@ -33,7 +34,9 @@ export default function GroupDetailedPage() {
     const [members, setMembers] = useState<TransactionUserDto[] | null>(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
-    const [activeTab, setActiveTab] = useState<"report" | "members" | "transactions">("report");
+    const [activeTab, setActiveTab] = useState<"report" | "members" | "transactions">(
+        locationState.activeTab ?? "report"
+    );
     const [report, setReport] = useState<GroupReportDto | null>(null);
     const [transactions, setTransactions] = useState<TransactionDto[] | null>(null);
 
@@ -119,14 +122,94 @@ export default function GroupDetailedPage() {
     <div className="tabContent">
         {!report && <div>Loading report...</div>}
 
-        {report && report.balances.map((b) => (
-        <MemberContainer
-            key={b.member.id}
-            fullName={b.member.full_name}
-            isReport
-            amount={b.amount}
-        />
-        ))}
+        {report && (() => {
+            const debts    = report.balances.filter(b => b.amount < 0);
+            const owed     = report.balances.filter(b => b.amount > 0);
+            const settled  = report.balances.filter(b => b.amount === 0);
+
+            const diffClass =
+                report.difference < 0 ? "sharingReportDiffNegative" :
+                report.difference > 0 ? "sharingReportDiffPositive" :
+                "sharingReportDiffNeutral";
+
+            return (
+                <>
+                    {/* ── summary card ── */}
+                    <div className="sharingReportCard">
+                        <div className="sharingReportHeader">
+                            <span className="sharingReportTitle">Sharing report</span>
+                            <button type="button" className="sharingReportDetails">Details</button>
+                        </div>
+
+                        <div className="sharingReportDiffLabel">Difference</div>
+                        <div className={`sharingReportDiffValue ${diffClass}`}>
+                            {report.difference > 0 ? "+" : ""}{report.difference.toFixed(2)} EUR
+                        </div>
+
+                        <div className="sharingReportRow">
+                            <div className="sharingReportCol">
+                                <span className="sharingReportColLabel">Debt</span>
+                                <span className="sharingReportColValueNeg">
+                                    {report.liability.toFixed(2)} EUR
+                                </span>
+                            </div>
+                            <div className="sharingReportDivider" />
+                            <div className="sharingReportCol">
+                                <span className="sharingReportColLabel">Receivable</span>
+                                <span className="sharingReportColValuePos">
+                                    {report.receivable.toFixed(2)} EUR
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+
+                    {/* ── my debts ── */}
+                    {debts.length > 0 && (
+                        <>
+                            <p className="reportSectionLabel">MY DEBTS({debts.length})</p>
+                            {debts.map(b => (
+                                <MemberContainer
+                                    key={b.member.id}
+                                    fullName={b.member.full_name}
+                                    isReport
+                                    amount={b.amount}
+                                />
+                            ))}
+                        </>
+                    )}
+
+                    {/* ── owed to me ── */}
+                    {owed.length > 0 && (
+                        <>
+                            <p className="reportSectionLabel">OWED TO ME({owed.length})</p>
+                            {owed.map(b => (
+                                <MemberContainer
+                                    key={b.member.id}
+                                    fullName={b.member.full_name}
+                                    isReport
+                                    amount={b.amount}
+                                />
+                            ))}
+                        </>
+                    )}
+
+                    {/* ── settled ── */}
+                    {settled.length > 0 && (
+                        <>
+                            <p className="reportSectionLabel">SETTLED({settled.length})</p>
+                            {settled.map(b => (
+                                <MemberContainer
+                                    key={b.member.id}
+                                    fullName={b.member.full_name}
+                                    isReport
+                                    amount={b.amount}
+                                />
+                            ))}
+                        </>
+                    )}
+                </>
+            );
+        })()}
     </div>
     )}
     {activeTab === "members" && (
@@ -156,7 +239,12 @@ export default function GroupDetailedPage() {
           <h3 className="transactionDate">{date}</h3>
 
           {items.map((t) => (
-            <div key={t.id} className="transactionItem">
+            <div
+              key={t.id}
+              className="transactionItem"
+              style={{ cursor: "pointer" }}
+              onClick={() => navigate(`/groups/${groupId}/transactions/${t.id}`)}
+            >
               <div className="transactionLeft">
                 <SendIcon className="transaction-icon"/>
 

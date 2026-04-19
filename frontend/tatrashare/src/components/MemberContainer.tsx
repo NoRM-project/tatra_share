@@ -16,7 +16,10 @@ export default function MemberContainer({
   isReport,
   amount = 0,
 }: MemberContainerProps) {
+  const isZero = amount === 0;
   const isPositive = amount > 0;
+
+  const amountClass = isZero ? "neutral" : isPositive ? "positive" : "negative";
 
   return (
     <div className="memberContainer">
@@ -28,17 +31,19 @@ export default function MemberContainer({
       </div>
 
       {isReport ? (
-      <div className="memberRight">
-      <span className={`memberAmount ${isPositive ? "positive" : "negative"}`}>
-        {amount.toFixed(2)} EUR
-      </span>
+        <div className="memberRight">
+          <span className={`memberAmount ${amountClass}`}>
+            {Math.abs(amount).toFixed(2)} EUR
+          </span>
 
-      <div className="iconStack">
-        <SendIcon className={`icon ${!isPositive ? "visible" : "hidden"}`} />
-        <CheckIcon className={`icon ${isPositive ? "visible" : "hidden"}`} />
-      </div>
-    </div>
-) : null}
+          {!isZero && (
+            <div className="iconStack">
+              <SendIcon className={`icon ${!isPositive ? "visible" : "hidden"}`} />
+              <CheckIcon className={`icon ${isPositive ? "visible" : "hidden"}`} />
+            </div>
+          )}
+        </div>
+      ) : null}
     </div>
   );
 }

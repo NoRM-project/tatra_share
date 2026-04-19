@@ -111,3 +111,68 @@
   border-top: 1px solid rgba(255, 255, 255, 0.06);
 }
 
+/* ── friends list ── */
+.addGroupFriendsListWrap {
+  margin-top: 14px;
+}
+
+/* ── section note / helper text ── */
+.addGroupSectionNote {
+  margin: 0 0 14px 0;
+  font-size: 13px;
+  color: #8b92a3;
+  line-height: 1.5;
+}
+
+/* ── state / feedback text ── */
+.addGroupStateText {
+  margin: 0;
+  font-size: 14px;
+  color: #9aa3b2;
+  text-align: center;
+  padding: 12px 0;
+}
+
+.addGroupErrorText {
+  margin: 0;
+  font-size: 13px;
+  color: #ff7f7f;
+  padding: 2px 0;
+}
+
+.addGroupSuccessText {
+  margin: 0;
+  font-size: 13px;
+  color: #4da3ff;
+  padding: 2px 0;
+}
+
+/* ── selected member row (summary section) ── */
+.addGroupSelectedMember {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  background: #1d212c;
+  border-radius: 12px;
+  padding: 12px 14px;
+  border: 1px solid rgba(34, 163, 255, 0.35);
+}
+
+.addGroupRemoveBtn {
+  border: none;
+  background: transparent;
+  color: #9aa3b2;
+  font-size: 14px;
+  line-height: 1;
+  cursor: pointer;
+  padding: 4px 6px;
+  border-radius: 6px;
+  flex-shrink: 0;
+  transition: color 0.15s;
+}
+
+.addGroupRemoveBtn:hover {
+  color: #ff7f7f;
+}
+

@@ -44,6 +44,10 @@
   font-weight: 600;
 }
 
+.memberAmount.neutral {
+  color: #9aa3b2;
+}
+
 .memberAmount.positive {
   color: #00c48c;
 }

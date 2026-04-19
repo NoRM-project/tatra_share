@@ -4,7 +4,7 @@ import TransactionsListPage from "./components/pages/TransactionsListPage"
 import GroupsPage from "./components/pages/GroupsPage"
 import NewGroupPage from "./components/pages/NewGroupPage"
 import TransactionPage from "./components/pages/TransactionPage"
-import GroupTransactionDetailPage from "./components/pages/GroupTransactionDetailPage"
+import GroupTransactionDetailPage from "./components/pages/GroupTransactionDetailPage.tsx"
 import GroupDetailedPage from "./components/pages/GroupDetailedPage"
 import NewGroupTransactionPage from "./components/pages/GroupTransactionCreatePage.tsx"
 
@@ -21,6 +21,7 @@ function App() {
                 <Route path="/grouptransactiondetail" element={<GroupTransactionDetailPage/>} />
                 <Route path="/groups/:groupId" element={<GroupDetailedPage />} />
                 <Route path="/groups/:groupId/newtransaction" element={<NewGroupTransactionPage/>} />
+                <Route path="/groups/:groupId/transactions/:transactionId" element={<GroupTransactionDetailPage/>} />
 
                 <Route path="*" element={<Navigate to="/" replace />} />
             </Routes>

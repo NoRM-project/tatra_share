@@ -1,0 +1,158 @@
+.txDetailPage {
+  min-height: 100vh;
+  background: #05070c;
+  color: #ffffff;
+  display: flex;
+  flex-direction: column;
+}
+
+.txDetailHeaderTitle {
+  font-size: 16px;
+  font-weight: 700;
+  color: #ffffff;
+}
+
+.txDetailState {
+  padding: 24px 16px;
+  color: #9aa3b2;
+  font-size: 14px;
+}
+
+.txDetailError {
+  padding: 16px;
+  color: #ff7f7f;
+  font-size: 14px;
+}
+
+.txDetailContent {
+  flex: 1;
+  padding: 14px 12px 32px;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ── key-value card ── */
+.txDetailCard {
+  background: #1d1e23;
+  border-radius: 12px;
+  padding: 0 16px;
+  margin-bottom: 24px;
+}
+
+.txDetailRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 0;
+}
+
+.txDetailBlock {
+  padding: 14px 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.txDetailDivider {
+  height: 1px;
+  background: rgba(255, 255, 255, 0.07);
+}
+
+.txDetailLabel {
+  font-size: 14px;
+  color: #9aa3b2;
+}
+
+.txDetailValue {
+  font-size: 14px;
+  font-weight: 600;
+  color: #ffffff;
+}
+
+.txDetailDescription {
+  margin: 0;
+  font-size: 14px;
+  color: #ffffff;
+  line-height: 1.5;
+}
+
+/* ── section labels ── */
+.txDetailSectionLabel {
+  margin: 0 0 10px 0;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  color: #ffffff;
+}
+
+.txDetailSectionRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+
+.txDetailSectionRow .txDetailSectionLabel {
+  margin: 0;
+}
+
+.txDetailEditBtn {
+  border: none;
+  background: transparent;
+  color: #4da3ff;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  padding: 0;
+}
+
+/* ── member cards ── */
+.txDetailMemberList {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.txDetailMemberCard {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: #1d1e23;
+  border-radius: 12px;
+  padding: 14px 16px;
+  margin-bottom: 8px;
+}
+
+.txDetailMemberList .txDetailMemberCard {
+  margin-bottom: 0;
+}
+
+.txDetailMemberInfo {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 0;
+}
+
+.txDetailMemberName {
+  font-size: 15px;
+  font-weight: 600;
+  color: #ffffff;
+}
+
+.txDetailMemberIban {
+  font-size: 13px;
+  color: #9aa3b2;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.txDetailSplitAmount {
+  margin-left: auto;
+  font-size: 14px;
+  font-weight: 600;
+  color: #ffffff;
+  white-space: nowrap;
+  flex-shrink: 0;
+}

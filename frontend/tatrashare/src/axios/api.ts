@@ -20,7 +20,7 @@ export interface GroupDto {
 
 export interface CreateGroupRequest {
   name: string;
-  memberIds: number[];
+  member_ids: number[];
 }
 
 export interface TransactionDto {

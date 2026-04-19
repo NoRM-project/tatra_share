@@ -34,6 +34,10 @@
   font-weight: 600;
 }
 
+.groupAmount.neutral {
+  color: #9aa3b2;
+}
+
 .groupAmount.positive {
   color: #00c48c;
 }
