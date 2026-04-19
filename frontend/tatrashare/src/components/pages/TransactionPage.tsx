@@ -1,10 +1,12 @@
-import { Link } from "react-router-dom";
-import Button from "../Button";
+import { useState } from "react";
 import MobileHeader from "../MobileHeader";
-import ArrowWithText from "../ArrowWithText";
-import ComponentsBlock from "../ComponentsBlock";
+import ShareTransactions from "./ShareTransactions";
+import "../../style/TransactionPage.css";
+import ArrowWithText from "../ArrowWithText.tsx";
 
 export default function TransactionPage() {
+  const [isShareOpen, setIsShareOpen] = useState(false);
+
   const payload = {
     name: "VE POS nakup",
     description: "VE POS nakup",
@@ -13,42 +15,88 @@ export default function TransactionPage() {
   };
 
   return (
-    <div className="transactionsPage">
-      <MobileHeader left={<ArrowWithText label="Detail pohybu" />} />
+      <div className="transactionPage">
+        <MobileHeader
+            left={<ArrowWithText label="Transaction detail" />}
+            right={
+              <button
+                  className="transactionSplitButton"
+                  type="button"
+                  onClick={() => setIsShareOpen(true)}
+              >
+                Split
+              </button>
+            }
+        />
 
-      <main>
-        <ComponentsBlock>
-          <div className="transactionDetailCard">
-            <div className="transactionRow">
-              <p className="transactionDetailLabel">Suma</p>
-              <p className="transactionAmount expense">184,00 EUR</p>
+        <main className="transactionPageContent">
+          <section className="transactionSummaryCard">
+            <div className="transactionSmallText">Platba kartou 4444**3333</div>
+            <div className="transactionMerchant">PEPCO 120083 KOSICE</div>
+
+            <div className="transactionAmountLabel">Amount</div>
+            <div className="transactionAmountValue expense">- 1,30 EUR</div>
+          </section>
+
+          <section className="transactionUtilityBlock">
+            <div className="transactionPdfWrap">
+              <div className="transactionPdfIcon">PDF</div>
+              <div className="transactionPdfText">Export to PDF</div>
             </div>
 
-            <div className="transactionRow">
-              <p className="transactionDetailLabel">Prijemca</p>
-              <p className="transactionDetailValue">ZELEZIARSTVO</p>
+            <button className="transactionImpactCard" type="button">
+              <div className="transactionImpactLeft">
+                <div className="transactionImpactBadge">co2</div>
+                <div>
+                  <div className="transactionImpactValue">1,49 kg CO₂e</div>
+                  <div className="transactionImpactDescription">
+                    Equal to a short-distance flight of 8 kilometres.
+                  </div>
+                </div>
+              </div>
+
+              <div className="transactionChevron">›</div>
+            </button>
+          </section>
+
+          <section className="transactionDetailsCard">
+            <div className="transactionDetailRow">
+              <span className="transactionDetailKey">Posting date</span>
+              <span className="transactionDetailVal">18.04.2026</span>
             </div>
 
-            <div className="transactionRow">
-              <p className="transactionDetailLabel">Typ</p>
-              <p className="transactionDetailValue">VE POS nakup</p>
+            <div className="transactionDetailRow">
+              <span className="transactionDetailKey">Value date</span>
+              <span className="transactionDetailVal">16.04.2026</span>
             </div>
 
-            <div className="transactionRow">
-              <p className="transactionDetailLabel">Dátum</p>
-              <p className="transactionDetailValue">16. mája 2025</p>
+            <div className="transactionDetailRow">
+              <span className="transactionDetailKey">Type of transaction</span>
+              <span className="transactionDetailVal">Debit</span>
             </div>
 
-            <Link
-              to="/sharetransaction"
-              state={{ transactionToShare: payload }}
-              className="shareTransactionButtonWrap"
-            >
-              <Button text="Share transaction" />
-            </Link>
-          </div>
-        </ComponentsBlock>
-      </main>
-    </div>
+            <div className="transactionDetailRow transactionDetailRowTall">
+              <span className="transactionDetailKey">Merchant</span>
+              <span className="transactionDetailVal transactionDetailValRight">
+              PEPCO 120083 KOSICE
+              <br />
+              KOSICE
+            </span>
+            </div>
+
+            <div className="transactionDetailBlock">
+              <div className="transactionDetailKey">Statement detail</div>
+              <div className="transactionStatementText">Detail is not available.</div>
+            </div>
+          </section>
+        </main>
+
+        {isShareOpen && (
+            <ShareTransactions
+                transactionToShare={payload}
+                onClose={() => setIsShareOpen(false)}
+            />
+        )}
+      </div>
   );
 }
