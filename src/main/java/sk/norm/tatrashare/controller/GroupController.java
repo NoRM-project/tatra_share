@@ -17,6 +17,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/groups")
 @RequiredArgsConstructor
+@CrossOrigin(origins = "http://localhost:5175")
 public class GroupController {
 
     private final GroupService groupService;
@@ -25,7 +26,7 @@ public class GroupController {
 
     @GetMapping
     public List<GroupDto> getGroupsByCurrentUser() {
-        Long currentUserId = currentUserProvider.getCurrentUserId();
+        Long currentUserId = 1L; //currentUserProvider.getCurrentUserId();
         return groupService.getGroupsByUserId(currentUserId);
     }
 

@@ -1,10 +1,7 @@
 package sk.norm.tatrashare.controller;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import sk.norm.tatrashare.auth.CurrentUserProvider;
 import sk.norm.tatrashare.dto.GroupReportDto;
 import sk.norm.tatrashare.service.ReportService;
@@ -12,6 +9,7 @@ import sk.norm.tatrashare.service.ReportService;
 @RestController
 @RequestMapping("/api/groups/{groupId}/report")
 @RequiredArgsConstructor
+@CrossOrigin(origins = "http://localhost:5175")
 public class ReportController {
 
 	private final ReportService reportService;
