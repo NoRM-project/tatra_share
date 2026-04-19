@@ -146,7 +146,7 @@ export default function AddNewGroupScreen() {
           <Button
             hasBackground={false}
             icon={<ChevronLeft size={22} strokeWidth={2} />}
-            onClick={() => navigate(-1)}
+            onClick={() => navigate("/groups")}
           />
         }
         center={<span className="addGroupHeaderTitle">Add new group</span>}

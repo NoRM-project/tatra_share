@@ -140,7 +140,7 @@ export default function GroupTransactionCreatePage() {
 
   return (
       <div className="groupTransactionPage">
-        <MobileHeader left={<ArrowWithText label="Tatrashare payment" />} />
+        <MobileHeader left={<ArrowWithText label="Tatrashare payment" to={`/groups/${parsedGroupId}`} />} />
 
         <main className="groupTransactionContent">
           {loading && <div className="groupTransactionState">Loading...</div>}

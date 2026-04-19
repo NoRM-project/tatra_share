@@ -6,13 +6,21 @@ import MobileHeader from "../MobileHeader";
 import "../../style/TransactionsListPage.css";
 import ArrowWithText from "../ArrowWithText";
 
-interface TransactionItem {
+export interface TransactionItem {
   id: string;
   person: string;
   description: string;
   amount: string;
-  impact?: string;
   isIncome: boolean;
+  // detail fields
+  cardNumber?: string;
+  postingDate: string;
+  valueDate: string;
+  transactionType: string;
+  merchant: string;
+  merchantCity: string;
+  statementDetail: string;
+  co2?: string;
 }
 
 const transactionSections: Array<{ date: string; items: TransactionItem[] }> = [
@@ -24,24 +32,44 @@ const transactionSections: Array<{ date: string; items: TransactionItem[] }> = [
         person: "ZELEZIARSTVO",
         description: "VE POS nakup",
         amount: "184,00",
-        impact: "20,95 kg CO2e",
         isIncome: false,
+        cardNumber: "4444**3333",
+        postingDate: "16.05.2025",
+        valueDate: "14.05.2025",
+        transactionType: "Debit",
+        merchant: "ZELEZIARSTVO CENTRUM 04",
+        merchantCity: "KOŠICE",
+        statementDetail: "POS purchase at ZELEZIARSTVO CENTRUM 04, Košice.",
+        co2: "20,95 kg CO₂e",
       },
       {
         id: "2",
         person: "Obuv Bata",
         description: "VE POS nakup",
         amount: "125,00",
-        impact: "20,95 kg CO2e",
         isIncome: false,
+        cardNumber: "4444**3333",
+        postingDate: "16.05.2025",
+        valueDate: "15.05.2025",
+        transactionType: "Debit",
+        merchant: "OBUV BATA 120091",
+        merchantCity: "BRATISLAVA",
+        statementDetail: "POS purchase at OBUV BATA 120091, Bratislava.",
+        co2: "14,22 kg CO₂e",
       },
       {
         id: "3",
         person: "Anna Petrovicka",
         description: "Prijata platba",
         amount: "178,00",
-        impact: "20,95 kg CO2e",
         isIncome: true,
+        postingDate: "16.05.2025",
+        valueDate: "16.05.2025",
+        transactionType: "Credit",
+        merchant: "Anna Petrovicka",
+        merchantCity: "—",
+        statementDetail: "Incoming transfer from Anna Petrovicka. Ref: 2025/05/178.",
+        co2: "0,00 kg CO₂e",
       },
     ],
   },
@@ -54,6 +82,12 @@ const transactionSections: Array<{ date: string; items: TransactionItem[] }> = [
         description: "Prijata platba",
         amount: "197,00",
         isIncome: true,
+        postingDate: "15.05.2025",
+        valueDate: "15.05.2025",
+        transactionType: "Credit",
+        merchant: "Jan Novy",
+        merchantCity: "—",
+        statementDetail: "Incoming transfer from Jan Novy. Ref: JN-0512.",
       },
     ],
   },
@@ -66,6 +100,12 @@ const transactionSections: Array<{ date: string; items: TransactionItem[] }> = [
         description: "Odoslana platba",
         amount: "120,00",
         isIncome: false,
+        postingDate: "14.05.2025",
+        valueDate: "14.05.2025",
+        transactionType: "Debit",
+        merchant: "Ing. Peter Novak",
+        merchantCity: "—",
+        statementDetail: "Outgoing transfer to Ing. Peter Novak. Ref: PN-MAJ25.",
       },
     ],
   },
@@ -78,6 +118,12 @@ const transactionSections: Array<{ date: string; items: TransactionItem[] }> = [
         description: "Prijata platba",
         amount: "115,00",
         isIncome: true,
+        postingDate: "10.05.2025",
+        valueDate: "10.05.2025",
+        transactionType: "Credit",
+        merchant: "Klaudia Kovacova",
+        merchantCity: "—",
+        statementDetail: "Incoming transfer from Klaudia Kovacova. Ref: KK0510.",
       },
     ],
   },
@@ -87,7 +133,7 @@ export default function TransactionsListPage() {
   return (
     <div className="transactionsPage">
       <MobileHeader
-        left={<ArrowWithText label="Transactions"/>}
+        left={<ArrowWithText label="Transactions" to="/" />}
         right={
           <button className="headerIconButton" type="button" aria-label="Search transactions">
             <Search size={22} strokeWidth={1.8} />
@@ -99,7 +145,7 @@ export default function TransactionsListPage() {
         {transactionSections.map((section) => (
           <ComponentsBlock key={section.date} label={section.date}>
             {section.items.map((transaction) => (
-              <Link key={transaction.id} to="/transactiondetail" className="transactionRow">
+              <Link key={transaction.id} to="/transactiondetail" state={{ transaction }} className="transactionRow">
                 <span className={`transactionSign ${transaction.isIncome ? "income" : "expense"}`}>
                   {transaction.isIncome ? "+" : "-"}
                 </span>

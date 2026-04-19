@@ -8,8 +8,9 @@
 }
 
 .secondaryTitle h2 {
-  color: #D4D4D4;
+  color: #ffffff;
   margin: 0;
-  font-size: 18px;
-  font-weight: 600;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
 }
