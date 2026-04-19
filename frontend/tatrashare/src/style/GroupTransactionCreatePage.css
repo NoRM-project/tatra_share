@@ -1,0 +1,208 @@
+.groupTransactionPage {
+    min-height: 100vh;
+    background: #05070c;
+    color: #ffffff;
+    display: flex;
+    flex-direction: column;
+}
+
+.groupTransactionContent {
+    flex: 1;
+    padding: 14px 12px 120px;
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+    overflow-y: auto;
+}
+
+.groupTransactionState,
+.groupTransactionError {
+    padding: 16px;
+    border-radius: 12px;
+    background: #151821;
+}
+
+.groupTransactionError {
+    color: #ff7f7f;
+}
+
+.transactionSection {
+    background: #171a22;
+    border-radius: 14px;
+    padding: 14px;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.transactionSectionTitle {
+    margin: 0 0 14px 0;
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: 0.02em;
+    color: #ffffff;
+}
+
+.transactionForm {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.transactionInput,
+.transactionTextarea {
+    width: 100%;
+    border: none;
+    outline: none;
+    background: #0d1017;
+    color: #ffffff;
+    border-radius: 0;
+    padding: 14px 12px;
+    font-size: 14px;
+    box-sizing: border-box;
+}
+
+.transactionInput::placeholder,
+.transactionTextarea::placeholder {
+    color: #7d8493;
+}
+
+.transactionTextarea {
+    resize: none;
+    min-height: 110px;
+}
+
+.transactionAmountRow {
+    display: flex;
+    gap: 10px;
+}
+
+.transactionAmountInput {
+    flex: 1;
+}
+
+.transactionCurrencyBox {
+    min-width: 74px;
+    background: #0d1017;
+    color: #ffffff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 14px 12px;
+    font-size: 14px;
+}
+
+.beneficiariesList {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.beneficiaryCard {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    background: #1d212c;
+    border-radius: 12px;
+    padding: 12px 14px;
+    border: 1px solid rgba(255, 255, 255, 0.04);
+    cursor: pointer;
+}
+
+.beneficiaryCard.isSelected {
+    border-color: rgba(34, 163, 255, 0.7);
+}
+
+.beneficiaryLeft {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    min-width: 0;
+    flex: 1;
+}
+
+.beneficiaryInfo {
+    min-width: 0;
+    flex: 1;
+}
+
+.beneficiaryName {
+    font-size: 16px;
+    font-weight: 600;
+    color: #ffffff;
+    margin-bottom: 4px;
+}
+
+.beneficiaryIban {
+    font-size: 13px;
+    color: #8b92a3;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.beneficiaryCheckbox {
+    display: none;
+}
+
+.beneficiaryFakeCheckbox {
+    width: 18px;
+    height: 18px;
+    border-radius: 6px;
+    border: 1.5px solid #5d6474;
+    background: transparent;
+    flex-shrink: 0;
+    position: relative;
+}
+
+.beneficiaryCard.isSelected .beneficiaryFakeCheckbox {
+    background: #1495ff;
+    border-color: #1495ff;
+}
+
+.transactionGroupInfo {
+    text-align: center;
+    font-size: 15px;
+    color: #d8dce5;
+}
+
+.transactionGroupInfo span {
+    color: #ffffff;
+    font-weight: 600;
+}
+
+.transactionSubmitButton {
+    width: 100%;
+    border: none;
+    border-radius: 12px;
+    padding: 16px;
+    font-size: 15px;
+    font-weight: 700;
+    color: white;
+    background: linear-gradient(180deg, #1ca5ff 0%, #0a84ff 100%);
+    cursor: pointer;
+}
+
+.transactionSubmitButton:disabled {
+    opacity: 0.45;
+    cursor: not-allowed;
+}
+
+.transactionBottomBar {
+    position: sticky;
+    bottom: 0;
+    padding: 12px;
+    background: #05070c;
+    border-top: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.transactionSubmitButton {
+    width: 100%;
+    border: none;
+    border-radius: 12px;
+    padding: 16px;
+    font-size: 15px;
+    font-weight: 700;
+    color: white;
+    background: linear-gradient(180deg, #1ca5ff 0%, #0a84ff 100%);
+    cursor: pointer;
+}
