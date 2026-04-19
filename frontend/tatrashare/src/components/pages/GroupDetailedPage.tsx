@@ -8,6 +8,7 @@ import { reportApi, groupApi, transactionApi, groupMemberApi } from "../../axios
 import type { GroupDto, GroupReportDto, TransactionDto, TransactionUserDto } from "../../axios/api";
 import Tabs from "../Tabs";
 import MemberContainer from "../MemberContainer";
+import SecondaryTitle from "../SecondaryTitle";
 
 export default function GroupDetailedPage() {
     const { groupId } = useParams();
@@ -89,31 +90,12 @@ export default function GroupDetailedPage() {
 
     return <>
         <MobileHeader
-            left={<ArrowWithText label={loading ? 'Loading...' : (group ? group.name : 'Group not found')} />} right={<Button icon={<QrCode/>} />}
+            left={<ArrowWithText label={loading ? 'Loading...' : (group ? group.name : 'Group not found')} />}
+            right={<Button hasBackground={false} icon={<QrCode/>} />}
         />
 
-        {/* <div style={{ padding: 12 }}>
-            {loading && <div>Loading group...</div>}
-            {error && <div style={{ color: 'red' }}>Error: {error}</div>}
-            {!loading && !error && !group && <div>Group not found.</div>}
-
-            {!loading && group && (
-                <>
-                    <div style={{ marginTop: 12 }}>
-                        <strong>Members</strong>
-                        <div style={{ marginTop: 8 }}>
-                            {members === null && <div>Loading members...</div>}
-                            {members && members.length === 0 && <div>No members found.</div>}
-                            {members && members.map(m => (
-                                <div key={m.id} style={{ padding: 8, borderBottom: '1px solid #eee' }}>{m.full_name} • {m.iban}</div>
-                            ))}
-                        </div>
-                    </div>
-                </>
-            )}
-        </div> */}
-
         <Tabs active={activeTab} setActive={setActiveTab} />
+
 
     {activeTab === "report" && (
     <div className="tabContent">
@@ -134,6 +116,7 @@ export default function GroupDetailedPage() {
         {members === null && <div>Loading members...</div>}
         {members && members.length === 0 && <div>No members</div>}
 
+        <SecondaryTitle label="Items" button={<Button hasBackground={false} text="Share link"/>}/>
         {members && members.map((m) => (
         <MemberContainer
             key={m.id}

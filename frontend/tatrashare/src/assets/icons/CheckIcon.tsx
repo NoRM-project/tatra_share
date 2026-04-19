@@ -1,10 +1,12 @@
 type IconProps = {
   size?: number;
+  className: string;
 };
 
-export default function CheckIcon({ size = 24 }: IconProps) {
+export default function CheckIcon({ size = 24, className }: IconProps) {
   return (
     <svg
+      className={className}
       width={size}
       height={size}
       viewBox="0 0 24 24"

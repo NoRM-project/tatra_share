@@ -1,5 +1,4 @@
-import { ArrowLeft } from "lucide-react";
-import { Link, useLocation, useNavigate, useParams } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { useEffect, useMemo, useState } from "react";
 import MobileHeader from "../MobileHeader";
 import MobileFooter from "../MobileFooter";

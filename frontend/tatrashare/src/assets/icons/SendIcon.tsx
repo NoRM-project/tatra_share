@@ -1,10 +1,12 @@
 type IconProps = {
   size?: number;
+  className: string
 };
 
-export default function SendIcon({ size = 24 }: IconProps) {
+export default function SendIcon({ size = 24, className }: IconProps) {
   return (
     <svg
+      className={className}
       width={size}
       height={size}
       viewBox="0 0 22 23"
