@@ -1,32 +1,7 @@
 .transactionsPage {
   min-height: 100vh;
-  background: #0f141f;
+  background: #000;
   color: #f4f7ff;
-}
-
-.transactionsPage .mobileHeader {
-  position: sticky;
-  top: 0;
-  z-index: 1001;
-  background: #0f141f;
-  border-bottom: 1px solid #1d2940;
-}
-
-.transactionsHeaderTitle {
-  font-size: 24px;
-  font-weight: 700;
-  color: #e8eefc;
-}
-
-.headerIconButton {
-  border: 0;
-  background: transparent;
-  color: #2f98ff;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  text-decoration: none;
 }
 
 .transactionsContent {
@@ -34,7 +9,7 @@
 }
 
 .transactionsContent .componentBlock {
-  background: #121b2b;
+  background: #1D1E23;
   border-top: 1px solid #1d2940;
 }
 
@@ -59,7 +34,7 @@
   align-items: center;
   gap: 12px;
   padding: 16px 0;
-  border-bottom: 1px solid #1a2439;
+  border-bottom: 1px solid #777;
   text-decoration: none;
 }
 
@@ -124,8 +99,7 @@
 }
 
 .transactionDetailCard {
-  background: #121b2b;
-  border: 1px solid #1d2940;
+  background: #1D1E23;
   border-radius: 16px;
   padding: 20px 16px;
   text-align: left;

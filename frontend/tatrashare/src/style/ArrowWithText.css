@@ -1,0 +1,13 @@
+.arrowWithText {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+}
+
+.arrowWithText h2 {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 600;
+  align-content: center;
+  text-align: center;
+}

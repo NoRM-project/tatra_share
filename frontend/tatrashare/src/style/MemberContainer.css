@@ -1,0 +1,53 @@
+.memberContainer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  background: #1d1e23;
+  padding: 16px;
+  border-radius: 16px;
+
+  margin-bottom: 12px;
+}
+
+.memberInfo {
+  flex: 1;
+  margin-left: 12px;
+
+  display: flex;
+  flex-direction: column;
+}
+
+.memberInfo h2 {
+  margin: 0;
+  font-size: 16px;
+  font-weight: 600;
+  color: white;
+}
+
+.memberIban {
+  margin-top: 4px;
+  font-size: 14px;
+  color: #acadb1;
+}
+
+/* RIGHT SIDE (report mode) */
+.memberRight {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.memberAmount {
+  font-size: 16px;
+  font-weight: 600;
+}
+
+/* 🔥 colors like screenshot */
+.memberAmount.positive {
+  color: #00c48c;
+}
+
+.memberAmount.negative {
+  color: #ff3b5c;
+}

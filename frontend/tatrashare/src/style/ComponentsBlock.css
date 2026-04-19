@@ -1,6 +1,7 @@
 .componentBlock {
   padding: 16px;
   margin-bottom: 16px;
+  background-color: #1D1E23;
 }
 
 .componentBlockHeader {
@@ -8,7 +9,7 @@
   justify-content: space-between;
   align-items: center;
 
-  margin-bottom: 12px;
+  margin-bottom: 8px;
 
   color: #fff;
 }

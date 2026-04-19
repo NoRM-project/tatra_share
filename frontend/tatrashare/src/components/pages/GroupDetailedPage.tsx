@@ -4,8 +4,10 @@ import MobileHeader from "../MobileHeader";
 import ArrowWithText from "../ArrowWithText";
 import Button from "../Button";
 import { QrCode } from "lucide-react";
-import { groupApi, groupMemberApi } from "../../axios/api";
-import type { GroupDto, TransactionUserDto } from "../../axios/api";
+import { reportApi, groupApi, transactionApi, groupMemberApi } from "../../axios/api";
+import type { GroupDto, GroupReportDto, TransactionDto, TransactionUserDto } from "../../axios/api";
+import Tabs from "../Tabs";
+import MemberContainer from "../MemberContainer";
 
 export default function GroupDetailedPage() {
     const { groupId } = useParams();
@@ -17,6 +19,9 @@ export default function GroupDetailedPage() {
     const [members, setMembers] = useState<TransactionUserDto[] | null>(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
+    const [activeTab, setActiveTab] = useState<"report" | "members" | "transactions">("report");
+    const [report, setReport] = useState<GroupReportDto | null>(null);
+    const [transactions, setTransactions] = useState<TransactionDto[] | null>(null);
 
     useEffect(() => {
         let mounted = true;
@@ -24,7 +29,6 @@ export default function GroupDetailedPage() {
             setLoading(true);
             try {
                 const id = Number(groupId);
-                // If we have a preselected group from navigation state, use it and only fetch members
                 if (preselected && preselected.id === id) {
                     setGroup(preselected);
                     try {
@@ -35,7 +39,6 @@ export default function GroupDetailedPage() {
                         setMembers([]);
                     }
                 } else {
-                    // Fall back to loading all groups and finding the one by id (existing behavior)
                     const groupsRes = await groupApi.getGroups();
                     if (!mounted) return;
                     const found = groupsRes.data.find(g => g.id === id) || null;
@@ -50,6 +53,21 @@ export default function GroupDetailedPage() {
                         }
                     }
                 }
+                try {
+                    const reportRes = await reportApi.getReport(id);
+                    if (!mounted) return;
+                        setReport(reportRes.data);
+                } catch (_) {
+                    setReport(null);
+                }
+
+                try {
+                    const txRes = await transactionApi.getTransactions(id);
+                    if (!mounted) return;
+                    setTransactions(txRes.data);
+                } catch (_) {
+                    setTransactions([]);
+                }
                 setError(null);
             } catch (e: unknown) {
                 const message = e instanceof Error ? e.message : String(e);
@@ -62,25 +80,19 @@ export default function GroupDetailedPage() {
         return () => { mounted = false };
     }, [groupId]);
 
-    // If navigated here with the intention to open transaction detail after selection, do it once group loads
     useEffect(() => {
-        // Only run after group is loaded
         const shouldOpen = !!stateAny?.openTransactionAfterSelect;
         if (shouldOpen && group) {
-            // navigate to transaction detail
             navigate('/transactiondetail');
         }
     }, [stateAny, group, navigate]);
 
     return <>
         <MobileHeader
-            left={
-                <ArrowWithText label={loading ? 'Loading...' : (group ? group.name : 'Group not found')} />
-            }
-            right={<Button icon={<QrCode/>} />}
+            left={<ArrowWithText label={loading ? 'Loading...' : (group ? group.name : 'Group not found')} />} right={<Button icon={<QrCode/>} />}
         />
 
-        <div style={{ padding: 12 }}>
+        {/* <div style={{ padding: 12 }}>
             {loading && <div>Loading group...</div>}
             {error && <div style={{ color: 'red' }}>Error: {error}</div>}
             {!loading && !error && !group && <div>Group not found.</div>}
@@ -99,7 +111,60 @@ export default function GroupDetailedPage() {
                     </div>
                 </>
             )}
+        </div> */}
+
+        <Tabs active={activeTab} setActive={setActiveTab} />
+
+    {activeTab === "report" && (
+    <div className="tabContent">
+        {!report && <div>Loading report...</div>}
+
+        {report && report.balances.map((b) => (
+        <MemberContainer
+            key={b.member.id}
+            fullName={b.member.full_name}
+            isReport
+            amount={b.amount}
+        />
+        ))}
+    </div>
+    )}
+    {activeTab === "members" && (
+    <div className="tabContent">
+        {members === null && <div>Loading members...</div>}
+        {members && members.length === 0 && <div>No members</div>}
+
+        {members && members.map((m) => (
+        <MemberContainer
+            key={m.id}
+            fullName={m.full_name}
+            iban={m.iban}
+            isReport={false}
+        />
+        ))}
+    </div>
+    )}
+    {activeTab === "transactions" && (
+    <div className="tabContent">
+        {transactions === null && <div>Loading transactions...</div>}
+        {transactions && transactions.length === 0 && <div>No transactions</div>}
+
+        {transactions && transactions.map((t) => (
+        <div key={t.id} className="transactionItem">
+            <div>
+            <strong>{t.name}</strong>
+            <p className="transactionSub">
+                Paid by {t.paid_by.full_name}
+            </p>
+            </div>
+
+            <div className="transactionAmount">
+            {t.amount.toFixed(2)} EUR
+            </div>
         </div>
+        ))}
+    </div>
+    )}
 
     </>
 }
