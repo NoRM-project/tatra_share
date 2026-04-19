@@ -1,8 +1,8 @@
-import { ArrowLeft } from "lucide-react";
 import { Link } from "react-router-dom";
 import MobileFooter from "../MobileFooter";
 import MobileHeader from "../MobileHeader";
 import "../../style/TransactionsListPage.css";
+import BackIcon from "../../assets/icons/BackIcon";
 
 export default function ShareTransactions() {
   return (
@@ -10,7 +10,7 @@ export default function ShareTransactions() {
       <MobileHeader
         left={
           <Link to="/transactiondetail" className="headerIconButton" aria-label="Back to transaction detail">
-            <ArrowLeft size={24} strokeWidth={1.8} />
+            <BackIcon />
           </Link>
         }
         center={<span className="transactionsHeaderTitle">Share transaction</span>}

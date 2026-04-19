@@ -1,13 +1,16 @@
 .componentBlock {
   padding: 16px;
-  gap: 8px;
-  background-color: #1e1e1e;
+  margin-bottom: 16px;
 }
 
 .componentBlockHeader {
   display: flex;
   justify-content: space-between;
   align-items: center;
+
+  margin-bottom: 12px;
+
+  color: #fff;
 }
 
 .componentBlockHeader h2 {
@@ -15,7 +18,13 @@
   font-weight: 600;
 }
 
+.componentBlockHeader div {
+  font-size: 14px;
+  color: #4da3ff;
+}
+
 .componentBlockContent {
   display: flex;
   flex-direction: column;
+  gap: 12px;
 }

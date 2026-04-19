@@ -1,16 +1,20 @@
-import { Home, ArrowRightLeft, Send, Menu, User } from "lucide-react";
 import "../style/MobileFooter.css";
 import { NavLink } from "react-router-dom";
 import type { ReactNode } from "react";
+import HomeIcon from "../assets/icons/HomeIcon";
+import TransactionIcon from "../assets/icons/TransactionIcon";
+import SendIcon from "../assets/icons/SendIcon";
+import GroupsIcon from "../assets/icons/GroupsIcon";
+import MenuIcon from "../assets/icons/MenuIcon";
 
 export default function MobileFooter() {
   return (
     <nav className="bottomNav">
-      <NavItem icon={<Home size={20} strokeWidth={1} />} label="Home" to="/" />
-      <NavItem icon={<ArrowRightLeft size={20} strokeWidth={1} />} label="Transactions" to="/transactionslist" />
-      <NavItem icon={<Send size={20} strokeWidth={1} />} label="Payment" to="/payment" center />
-      <NavItem icon={<User size={20} strokeWidth={1} />} label="TatraShare" to="/groups" />
-      <NavItem icon={<Menu size={20} strokeWidth={1} />} label="More" to="/more" />
+      <NavItem icon={<HomeIcon />} label="Home" to="/" />
+      <NavItem icon={<TransactionIcon />} label="Transactions" to="/transactionslist" />
+      <NavItem icon={<SendIcon />} label="Payment" to="/payment" center />
+      <NavItem icon={<GroupsIcon />} label="TatraShare" to="/groups" />
+      <NavItem icon={<MenuIcon />} label="More" to="/more" />
     </nav>
   );
 }
@@ -31,7 +35,7 @@ function NavItem({ icon, label, to, center }: NavItemProps) {
       }
     >
       {icon}
-      {label && <span>{label}</span>}
+      {label && <p>{label}</p>}
     </NavLink>
   );
 }

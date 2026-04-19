@@ -1,9 +1,10 @@
-import { ArrowLeft, Cloud, Search } from "lucide-react";
+import { Cloud, Search } from "lucide-react";
 import { Link } from "react-router-dom";
 import ComponentsBlock from "../ComponentsBlock";
 import MobileFooter from "../MobileFooter";
 import MobileHeader from "../MobileHeader";
 import "../../style/TransactionsListPage.css";
+import BackIcon from "../../assets/icons/BackIcon";
 
 interface TransactionItem {
   id: string;
@@ -88,7 +89,7 @@ export default function TransactionsListPage() {
       <MobileHeader
         left={
           <Link to="/" className="headerIconButton" aria-label="Back to home">
-            <ArrowLeft size={24} strokeWidth={1.8} />
+            <BackIcon />
           </Link>
         }
         center={<span className="transactionsHeaderTitle">Pohyby na ucte</span>}

@@ -7,7 +7,7 @@ import { QrCode } from "lucide-react";
 export default function GroupDetailedPage() {
     const { groupId } = useParams();
     // TODO: get the group with id from api
-    const group;
+    //const group;
 
 
     return <>

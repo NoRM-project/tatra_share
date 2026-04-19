@@ -1,9 +1,9 @@
-import { ArrowLeft } from "lucide-react";
 import { Link } from "react-router-dom";
 import Button from "../Button";
 import MobileFooter from "../MobileFooter";
 import MobileHeader from "../MobileHeader";
 import "../../style/TransactionsListPage.css";
+import BackIcon from "../../assets/icons/BackIcon";
 
 export default function TransactionPage() {
   return (
@@ -11,7 +11,7 @@ export default function TransactionPage() {
       <MobileHeader
         left={
           <Link to="/transactionslist" className="headerIconButton" aria-label="Back to transactions">
-            <ArrowLeft size={24} strokeWidth={1.8} />
+            <BackIcon />
           </Link>
         }
         center={<span className="transactionsHeaderTitle">Detail pohybu</span>}
