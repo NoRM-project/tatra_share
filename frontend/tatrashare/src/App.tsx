@@ -1,4 +1,4 @@
-import { BrowserRouter, Route, Routes } from "react-router-dom"
+import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom"
 import HomePage from "./components/pages/HomePage"
 import TransactionsListPage from "./components/pages/TransactionsListPage"
 import GroupsPage from "./components/pages/GroupsPage"
@@ -22,6 +22,8 @@ function App() {
                 <Route path="/groups/:groupId" element={<GroupDetailedPage />} />
                 <Route path="/groups/:groupId/newtransaction" element={<NewGroupTransactionPage/>} />
                 <Route path="/sharetransaction" element={<ShareTransactions/>} />
+
+                <Route path="*" element={<Navigate to="/" replace />} />
             </Routes>
         </BrowserRouter>
     )

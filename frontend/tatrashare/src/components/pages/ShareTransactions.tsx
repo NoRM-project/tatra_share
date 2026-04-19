@@ -56,7 +56,7 @@ export default function ShareTransactions() {
       <MobileHeader
         left={
           <Link to="/transactiondetail" className="headerIconButton" aria-label="Back to transaction detail">
-            <ArrowLeft size={24} strokeWidth={1.8} />
+            <BackIcon />
           </Link>
         }
         center={<span className="transactionsHeaderTitle">Share transaction</span>}
