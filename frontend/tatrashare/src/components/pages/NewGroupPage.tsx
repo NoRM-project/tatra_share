@@ -1,5 +1,5 @@
+import AddNewGroupScreen from "./AddNewGroupScreen";
+
 export default function NewGroupPage() {
-    return <>
-        <h1>aaaa</h1>
-    </>
+    return <AddNewGroupScreen />
 }

@@ -22,9 +22,10 @@ export default function GroupTransactionCreatePage() {
   const location = useLocation();
 
   const state = (location.state ?? {}) as LocationState;
+  const selectedGroupFromState = state.selectedGroup;
   const parsedGroupId = Number(groupId);
 
-  const [group, setGroup] = useState<GroupDto | null>(state.selectedGroup ?? null);
+  const [group, setGroup] = useState<GroupDto | null>(selectedGroupFromState ?? null);
   const [members, setMembers] = useState<TransactionUserDto[]>([]);
   const [loading, setLoading] = useState(true);
   const [submitting, setSubmitting] = useState(false);
@@ -58,7 +59,7 @@ export default function GroupTransactionCreatePage() {
 
         const foundGroup =
             groupsRes.data.find((g) => g.id === parsedGroupId) ??
-            state.selectedGroup ??
+            selectedGroupFromState ??
             null;
 
         setGroup(foundGroup);
@@ -75,14 +76,18 @@ export default function GroupTransactionCreatePage() {
     if (!Number.isNaN(parsedGroupId)) {
       load();
     } else {
-      setError("Invalid group id");
-      setLoading(false);
+      // Defer to avoid synchronous state update directly inside effect body.
+      window.setTimeout(() => {
+        if (!mounted) return;
+        setError("Invalid group id");
+        setLoading(false);
+      }, 0);
     }
 
     return () => {
       mounted = false;
     };
-  }, [parsedGroupId]);
+  }, [parsedGroupId, selectedGroupFromState]);
 
   function toggleBeneficiary(userId: number) {
     setSelectedBeneficiaryIds((prev) =>
@@ -90,6 +95,13 @@ export default function GroupTransactionCreatePage() {
             ? prev.filter((id) => id !== userId)
             : [...prev, userId]
     );
+  }
+
+  function handleAmountChange(value: string) {
+    // Allow only digits with optional decimal dot and max one fraction digit.
+    if (/^\d*(\.\d{0,1})?$/.test(value)) {
+      setAmount(value);
+    }
   }
 
   const canSubmit = useMemo(() => {
@@ -151,10 +163,11 @@ export default function GroupTransactionCreatePage() {
                     <div className="transactionAmountRow">
                       <input
                           className="transactionInput transactionAmountInput"
-                          type="number"
+                          type="text"
+                          inputMode="decimal"
                           placeholder="Amount"
                           value={amount}
-                          onChange={(e) => setAmount(e.target.value)}
+                          onChange={(e) => handleAmountChange(e.target.value)}
                       />
 
                       <div className="transactionCurrencyBox">EUR</div>

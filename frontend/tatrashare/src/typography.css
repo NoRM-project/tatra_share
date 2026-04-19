@@ -1,0 +1,231 @@
+/* ============================================================
+   Typography — Obra shadcn UI Kit
+   Extracted from Figma variables (shadcn collection)
+   ============================================================ */
+
+/* ------------------------------------------------------------
+   Font definitions
+   ------------------------------------------------------------ */
+:root {
+  --font-family-sans:       "Geist", ui-sans-serif, system-ui, sans-serif;
+  --font-family-serif:      "Geist", ui-serif, Georgia, serif;
+  --font-family-headings:   var(--font-family-sans);
+  --font-family-body:       var(--font-family-sans);
+  --font-family-monospace:  "Geist Mono", ui-monospace, "Cascadia Code", monospace;
+
+  /* Font weights */
+  --font-weight-regular:    400;
+  --font-weight-medium:     500;
+  --font-weight-semibold:   600;
+}
+
+/* ------------------------------------------------------------
+   Heading 1
+   font-size: 48px | line-height: 48px | letter-spacing: -1.5px
+   ------------------------------------------------------------ */
+.heading-1 {
+  font-family:    var(--font-family-headings);
+  font-size:      3rem;          /* 48px */
+  line-height:    3rem;          /* 48px */
+  font-weight:    var(--font-weight-semibold);
+  letter-spacing: -0.09375rem;   /* -1.5px */
+  margin-bottom:  3rem;          /* spacing: 48px */
+}
+
+/* ------------------------------------------------------------
+   Heading 2
+   font-size: 30px | line-height: 30px | letter-spacing: -1px
+   ------------------------------------------------------------ */
+.heading-2 {
+  font-family:    var(--font-family-headings);
+  font-size:      1.875rem;      /* 30px */
+  line-height:    1.875rem;      /* 30px */
+  font-weight:    var(--font-weight-semibold);
+  letter-spacing: -0.0625rem;    /* -1px */
+  margin-bottom:  1.875rem;      /* spacing: 30px */
+}
+
+/* ------------------------------------------------------------
+   Heading 3
+   font-size: 24px | line-height: 28.8px | letter-spacing: -1px
+   ------------------------------------------------------------ */
+.heading-3 {
+  font-family:    var(--font-family-headings);
+  font-size:      1.5rem;        /* 24px */
+  line-height:    1.8rem;        /* 28.8px */
+  font-weight:    var(--font-weight-semibold);
+  letter-spacing: -0.0625rem;    /* -1px */
+  margin-bottom:  1.25rem;       /* spacing: 20px */
+}
+
+/* ------------------------------------------------------------
+   Heading 4
+   font-size: 20px | line-height: 24px | letter-spacing: 0
+   ------------------------------------------------------------ */
+.heading-4 {
+  font-family:    var(--font-family-headings);
+  font-size:      1.25rem;       /* 20px */
+  line-height:    1.5rem;        /* 24px */
+  font-weight:    var(--font-weight-semibold);
+  letter-spacing: 0;
+  margin-bottom:  1.25rem;       /* spacing: 20px */
+}
+
+/* ------------------------------------------------------------
+   Monospaced
+   font-size: 16px | line-height: 24px | letter-spacing: 0
+   ------------------------------------------------------------ */
+.monospaced {
+  font-family:    var(--font-family-monospace);
+  font-size:      1rem;          /* 16px */
+  line-height:    1.5rem;        /* 24px */
+  font-weight:    var(--font-weight-regular);
+  letter-spacing: 0;
+  margin-bottom:  1rem;          /* spacing: 16px */
+}
+
+/* ------------------------------------------------------------
+   Caption
+   font-size: 14px | line-height: 21px | letter-spacing: 1.5px
+   ------------------------------------------------------------ */
+.caption {
+  font-family:    var(--font-family-body);
+  font-size:      0.875rem;      /* 14px */
+  line-height:    1.3125rem;     /* 21px */
+  font-weight:    var(--font-weight-regular);
+  letter-spacing: 0.09375rem;    /* 1.5px */
+  margin-bottom:  0.875rem;      /* spacing: 14px */
+}
+
+/* ------------------------------------------------------------
+   Paragraph weights (composable modifiers)
+   ------------------------------------------------------------ */
+:root {
+  --paragraph-weight:        var(--font-weight-regular);
+  --paragraph-bold-weight:   var(--font-weight-semibold);
+  --paragraph-medium-weight: var(--font-weight-medium);
+}
+
+/* ------------------------------------------------------------
+   Paragraph / Large
+   font-size: 18px | line-height: 27px | letter-spacing: 0
+   ------------------------------------------------------------ */
+.paragraph-large {
+  font-family:    var(--font-family-body);
+  font-size:      1.125rem;      /* 18px */
+  line-height:    1.6875rem;     /* 27px */
+  font-weight:    var(--paragraph-weight);
+  letter-spacing: 0;
+  margin-bottom:  1.125rem;      /* spacing: 18px */
+}
+
+.paragraph-large-bold {
+  font-family:    var(--font-family-body);
+  font-size:      1.125rem;
+  line-height:    1.6875rem;
+  font-weight:    var(--paragraph-bold-weight);
+  letter-spacing: 0;
+  margin-bottom:  1.125rem;
+}
+
+.paragraph-large-medium {
+  font-family:    var(--font-family-body);
+  font-size:      1.125rem;
+  line-height:    1.6875rem;
+  font-weight:    var(--paragraph-medium-weight);
+  letter-spacing: 0;
+  margin-bottom:  1.125rem;
+}
+
+/* ------------------------------------------------------------
+   Paragraph / Regular
+   font-size: 16px | line-height: 24px | letter-spacing: 0
+   ------------------------------------------------------------ */
+.paragraph-regular {
+  font-family:    var(--font-family-body);
+  font-size:      1rem;          /* 16px */
+  line-height:    1.5rem;        /* 24px */
+  font-weight:    var(--paragraph-weight);
+  letter-spacing: 0;
+  margin-bottom:  1rem;          /* spacing: 16px */
+}
+
+.paragraph-regular-bold {
+  font-family:    var(--font-family-body);
+  font-size:      1rem;
+  line-height:    1.5rem;
+  font-weight:    var(--paragraph-bold-weight);
+  letter-spacing: 0;
+  margin-bottom:  1rem;
+}
+
+.paragraph-regular-medium {
+  font-family:    var(--font-family-body);
+  font-size:      1rem;
+  line-height:    1.5rem;
+  font-weight:    var(--paragraph-medium-weight);
+  letter-spacing: 0;
+  margin-bottom:  1rem;
+}
+
+/* ------------------------------------------------------------
+   Paragraph / Small
+   font-size: 14px | line-height: 20px | letter-spacing: 0
+   ------------------------------------------------------------ */
+.paragraph-small {
+  font-family:    var(--font-family-body);
+  font-size:      0.875rem;      /* 14px */
+  line-height:    1.25rem;       /* 20px */
+  font-weight:    var(--paragraph-weight);
+  letter-spacing: 0;
+  margin-bottom:  0.875rem;      /* spacing: 14px */
+}
+
+.paragraph-small-bold {
+  font-family:    var(--font-family-body);
+  font-size:      0.875rem;
+  line-height:    1.25rem;
+  font-weight:    var(--paragraph-bold-weight);
+  letter-spacing: 0;
+  margin-bottom:  0.875rem;
+}
+
+.paragraph-small-medium {
+  font-family:    var(--font-family-body);
+  font-size:      0.875rem;
+  line-height:    1.25rem;
+  font-weight:    var(--paragraph-medium-weight);
+  letter-spacing: 0;
+  margin-bottom:  0.875rem;
+}
+
+/* ------------------------------------------------------------
+   Paragraph / Mini
+   font-size: 12px | line-height: 16px | letter-spacing: 0
+   ------------------------------------------------------------ */
+.paragraph-mini {
+  font-family:    var(--font-family-body);
+  font-size:      0.75rem;       /* 12px */
+  line-height:    1rem;          /* 16px */
+  font-weight:    var(--paragraph-weight);
+  letter-spacing: 0;
+  margin-bottom:  0.75rem;       /* spacing: 12px */
+}
+
+.paragraph-mini-bold {
+  font-family:    var(--font-family-body);
+  font-size:      0.75rem;
+  line-height:    1rem;
+  font-weight:    var(--paragraph-bold-weight);
+  letter-spacing: 0;
+  margin-bottom:  0.75rem;
+}
+
+.paragraph-mini-medium {
+  font-family:    var(--font-family-body);
+  font-size:      0.75rem;
+  line-height:    1rem;
+  font-weight:    var(--paragraph-medium-weight);
+  letter-spacing: 0;
+  margin-bottom:  0.75rem;
+}

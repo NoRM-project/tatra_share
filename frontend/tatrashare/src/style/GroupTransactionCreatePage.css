@@ -77,6 +77,14 @@
 
 .transactionAmountInput {
     flex: 1;
+    appearance: textfield;
+    -moz-appearance: textfield;
+}
+
+.transactionAmountInput::-webkit-outer-spin-button,
+.transactionAmountInput::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
 }
 
 .transactionCurrencyBox {

@@ -4,7 +4,18 @@
   color: #f4f7ff;
 }
 
+.transactionsPage > .mobileHeader {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 1001;
+  background: #1d1e23;
+  border-bottom: 1px solid #1d2940;
+}
+
 .transactionsContent {
+  padding-top: 72px;
   padding-bottom: 96px;
 }
 

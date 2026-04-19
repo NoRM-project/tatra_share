@@ -10,6 +10,11 @@
     gap: 8px;
 }
 
+.buttonFullWidth {
+    width: 100%;
+    justify-content: center;
+}
+
 .buttonSecondary {
     background-color: transparent;
     color: #4da3ff;

@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useParams, useLocation, useNavigate } from "react-router-dom";
 import MobileHeader from "../MobileHeader";
 import ArrowWithText from "../ArrowWithText";
@@ -17,8 +17,18 @@ export default function GroupDetailedPage() {
     const { groupId } = useParams();
     const location = useLocation();
     const navigate = useNavigate();
-    const stateAny = (location.state || {}) as any;
-    const preselected: GroupDto | null = stateAny?.selectedGroup ?? null;
+
+    type GroupDetailedLocationState = {
+        selectedGroup?: GroupDto;
+        openTransactionAfterSelect?: boolean;
+    };
+
+    const locationState = useMemo(() => {
+        return (location.state ?? {}) as GroupDetailedLocationState;
+    }, [location.state]);
+
+    const preselected: GroupDto | null = locationState.selectedGroup ?? null;
+    const openTransactionAfterSelect = !!locationState.openTransactionAfterSelect;
     const [group, setGroup] = useState<GroupDto | null>(preselected);
     const [members, setMembers] = useState<TransactionUserDto[] | null>(null);
     const [loading, setLoading] = useState(true);
@@ -39,7 +49,7 @@ export default function GroupDetailedPage() {
                         const membersRes = await groupMemberApi.getMembers(id);
                         if (!mounted) return;
                         setMembers(membersRes.data);
-                    } catch (_ ) {
+                    } catch {
                         setMembers([]);
                     }
                 } else {
@@ -52,7 +62,7 @@ export default function GroupDetailedPage() {
                             const membersRes = await groupMemberApi.getMembers(id);
                             if (!mounted) return;
                             setMembers(membersRes.data);
-                        } catch (_ ) {
+                        } catch {
                             setMembers([]);
                         }
                     }
@@ -61,7 +71,7 @@ export default function GroupDetailedPage() {
                     const reportRes = await reportApi.getReport(id);
                     if (!mounted) return;
                         setReport(reportRes.data);
-                } catch (_) {
+                } catch {
                     setReport(null);
                 }
 
@@ -69,7 +79,7 @@ export default function GroupDetailedPage() {
                     const txRes = await transactionApi.getTransactions(id);
                     if (!mounted) return;
                     setTransactions(txRes.data);
-                } catch (_) {
+                } catch {
                     setTransactions([]);
                 }
                 setError(null);
@@ -82,20 +92,25 @@ export default function GroupDetailedPage() {
         }
         load();
         return () => { mounted = false };
-    }, [groupId]);
+    }, [groupId, preselected]);
 
     useEffect(() => {
-        const shouldOpen = !!stateAny?.openTransactionAfterSelect;
-        if (shouldOpen && group) {
+        if (openTransactionAfterSelect && group) {
             navigate('/transactiondetail');
         }
-    }, [stateAny, group, navigate]);
+    }, [openTransactionAfterSelect, group, navigate]);
 
     return <>
         <MobileHeader
             left={<ArrowWithText label={loading ? 'Loading...' : (group ? group.name : 'Group not found')} />}
             right={<Button hasBackground={false} icon={<QrCode/>} />}
         />
+
+        {error && (
+            <div style={{ padding: 16, color: "#ff7f7f", textAlign: "left" }}>
+                {error}
+            </div>
+        )}
 
         <Tabs active={activeTab} setActive={setActiveTab} />
 

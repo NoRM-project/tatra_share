@@ -1,0 +1,113 @@
+.addGroupPage {
+  min-height: 100vh;
+  background: #05070c;
+  color: #ffffff;
+  display: flex;
+  flex-direction: column;
+}
+
+.addGroupHeaderTitle {
+  font-size: 16px;
+  font-weight: 700;
+  color: #ffffff;
+}
+
+.addGroupTabs {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  background: #1d1e23;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.addGroupTab {
+  position: relative;
+  border: 0;
+  background: transparent;
+  color: #9aa3b2;
+  font-size: 14px;
+  font-weight: 600;
+  padding: 14px 12px;
+  cursor: pointer;
+}
+
+.addGroupTab.isActive {
+  color: #ffffff;
+}
+
+.addGroupTab.isActive::after {
+  content: "";
+  position: absolute;
+  left: 18px;
+  right: 18px;
+  bottom: 0;
+  height: 3px;
+  border-radius: 999px;
+  background: #4da3ff;
+}
+
+.addGroupContent {
+  flex: 1;
+  padding: 14px 12px 120px;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  overflow-y: auto;
+}
+
+.addGroupSectionHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.addGroupInlineAction {
+  border: 0;
+  background: transparent;
+  color: #4da3ff;
+  font-size: 13px;
+  font-weight: 600;
+  padding: 0;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.addGroupCenteredAction {
+  display: flex;
+  justify-content: center;
+  padding-top: 4px;
+}
+
+.addGroupMembersSection {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.addGroupMembersTitle {
+  margin: 0;
+  font-size: 13px;
+  letter-spacing: 0.08em;
+  color: #ffffff;
+  text-align: left;
+}
+
+.addGroupMembersList {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+/* override MemberContainer built-in margins to align with this screen padding */
+.addGroupPage .memberContainer {
+  margin: 0;
+}
+
+.addGroupBottomBar {
+  position: sticky;
+  bottom: 0;
+  padding: 12px;
+  background: #05070c;
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+}
+

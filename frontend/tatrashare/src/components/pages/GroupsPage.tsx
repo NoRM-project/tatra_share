@@ -3,59 +3,68 @@ import Button from "../Button";
 import MobileFooter from "../MobileFooter";
 import MobileHeader from "../MobileHeader";
 import SecondaryTitle from "../SecondaryTitle";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { groupApi } from "../../axios/api";
 import type { GroupDto } from "../../axios/api";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import GroupContainer from "../GroupContainer";
+import axios from "axios";
 
 export default function GroupsPage() {
+    const navigate = useNavigate();
     const [groups, setGroups] = useState<GroupDto[] | null>(null);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState<string | null>(null);
 
     function extractErrorMessage(err: unknown) {
         if (err instanceof Error) return err.message;
-        const anyErr = err as any;
-        if (anyErr?.isAxiosError) {
-            if (anyErr.response) {
-                const status = anyErr.response.status;
-                const statusText = anyErr.response.statusText || '';
+        if (axios.isAxiosError(err)) {
+            if (err.response) {
+                const status = err.response.status;
+                const statusText = err.response.statusText || "";
                 return `Server responded with ${status} ${statusText}`;
             }
-            if (anyErr.request) {
-                return 'No response received from server (network or CORS issue)';
+            if (err.request) {
+                return "No response received from server (network or CORS issue)";
             }
-            return anyErr.message || String(anyErr);
+            return err.message || String(err);
         }
-        return String(anyErr ?? 'Unknown error');
+        return String(err ?? "Unknown error");
     }
 
-    async function loadGroups() {
-        const mounted = true;
+    const loadGroups = useCallback(async () => {
         setLoading(true);
         try {
             const res = await groupApi.getGroups();
-            if (!mounted) return;
             setGroups(res.data);
             setError(null);
         } catch (err: unknown) {
-            if (!mounted) return;
             const msg = extractErrorMessage(err);
             setError(msg);
             setGroups([]);
         } finally {
-            if (mounted) setLoading(false);
+            setLoading(false);
         }
+    }, []);
+
+    function addGroup() {
+        navigate("/groups/new");
     }
 
     useEffect(() => {
-        loadGroups();
-    }, []);
+        // Defer initial load to avoid synchronous state updates directly in the effect body.
+        const t = window.setTimeout(() => {
+            void loadGroups();
+        }, 0);
+
+        return () => {
+            window.clearTimeout(t);
+        };
+    }, [loadGroups]);
 
     return <>
         <MobileHeader left={<h2 style={{ margin: 0 }}>TatraShare</h2>} right={<Button hasBackground={false} icon={<CircleQuestionMark color="#4da3ff"/>} />} />
-        <SecondaryTitle label="Groups" button={<Button hasBackground={false} text="Add group" />} />
+        <SecondaryTitle label="Groups" button={<Button hasBackground={false} text="Add group" onClick={addGroup}/>} />
 
         {loading && <div style={{ padding: 16 }}>Loading groups...</div>}
         {error && (
