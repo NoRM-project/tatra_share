@@ -2,12 +2,14 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
+  text-align: left;
 
   background: #1d1e23;
   padding: 16px;
-  border-radius: 16px;
+  border-radius: 8px;
 
-  margin-bottom: 12px;
+  margin: 0 12px;
+  margin-top: 12px;
 }
 
 .memberInfo {
@@ -31,11 +33,10 @@
   color: #acadb1;
 }
 
-/* RIGHT SIDE (report mode) */
 .memberRight {
   display: flex;
   align-items: center;
-  gap: 16px;
+  gap: 12px;
 }
 
 .memberAmount {
@@ -43,11 +44,40 @@
   font-weight: 600;
 }
 
-/* 🔥 colors like screenshot */
 .memberAmount.positive {
   color: #00c48c;
 }
 
 .memberAmount.negative {
   color: #ff3b5c;
+}
+
+/* 🔥 stack container */
+.iconStack {
+  position: relative;
+  width: 20px;
+  height: 20px;
+}
+
+/* both icons overlap */
+.iconStack .icon {
+  position: absolute;
+  top: 0;
+  left: 0;
+
+  width: 100%;
+  height: 100%;
+
+  color: #4da3ff;
+  transition: opacity 0.2s ease;
+}
+
+/* visibility control */
+.icon.visible {
+  opacity: 1;
+}
+
+.icon.hidden {
+  opacity: 0;
+  pointer-events: none;
 }
