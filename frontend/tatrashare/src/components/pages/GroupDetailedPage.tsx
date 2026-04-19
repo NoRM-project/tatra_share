@@ -9,6 +9,9 @@ import type { GroupDto, GroupReportDto, TransactionDto, TransactionUserDto } fro
 import Tabs from "../Tabs";
 import MemberContainer from "../MemberContainer";
 import SecondaryTitle from "../SecondaryTitle";
+import { groupTransactionsByDate } from "../../utils";
+import "../../style/GroupDetailedPage.css"
+import SendIcon from "../../assets/icons/SendIcon";
 
 export default function GroupDetailedPage() {
     const { groupId } = useParams();
@@ -128,26 +131,38 @@ export default function GroupDetailedPage() {
     </div>
     )}
     {activeTab === "transactions" && (
-    <div className="tabContent">
-        {transactions === null && <div>Loading transactions...</div>}
-        {transactions && transactions.length === 0 && <div>No transactions</div>}
+  <div className="tabContent">
+    {transactions === null && <div>Loading transactions...</div>}
+    {transactions && transactions.length === 0 && <div>No transactions</div>}
 
-        {transactions && transactions.map((t) => (
-        <div key={t.id} className="transactionItem">
-            <div>
-            <strong>{t.name}</strong>
-            <p className="transactionSub">
-                Paid by {t.paid_by.full_name}
-            </p>
-            </div>
+    {transactions && Object.entries(groupTransactionsByDate(transactions)).map(
+      ([date, items]) => (
+        <div key={date} className="transactionGroup">
+          <h3 className="transactionDate">{date}</h3>
 
-            <div className="transactionAmount">
-            {t.amount.toFixed(2)} EUR
+          {items.map((t) => (
+            <div key={t.id} className="transactionItem">
+              <div className="transactionLeft">
+                <SendIcon className="transaction-icon"/>
+
+                <div>
+                  <div className="transactionTitle">{t.name}</div>
+                  <div className="transactionSub">
+                    Paid by {t.paid_by.full_name}
+                  </div>
+                </div>
+              </div>
+
+              <div className="transactionAmount">
+                {t.amount.toFixed(2)} EUR
+              </div>
             </div>
+          ))}
         </div>
-        ))}
-    </div>
+      )
     )}
+  </div>
+)}
 
     </>
 }
