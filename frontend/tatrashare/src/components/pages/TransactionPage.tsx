@@ -6,6 +6,14 @@ import "../../style/TransactionsListPage.css";
 import BackIcon from "../../assets/icons/BackIcon";
 
 export default function TransactionPage() {
+  // For now this page shows static info; build a payload from the shown values for sharing
+  const payload = {
+    name: 'VE POS nakup',
+    description: 'VE POS nakup',
+    amount: 184.0,
+    beneficiary_ids: [],
+  };
+
   return (
     <div className="transactionsPage">
       <MobileHeader
@@ -31,7 +39,7 @@ export default function TransactionPage() {
           <p className="transactionDetailLabel">Datum</p>
           <p className="transactionDetailValue">16. maja 2025</p>
 
-          <Link to="/sharetransaction" className="shareTransactionButtonWrap">
+          <Link to="/sharetransaction" state={{ transactionToShare: payload }} className="shareTransactionButtonWrap">
             <Button text="share transaction" />
           </Link>
         </div>
