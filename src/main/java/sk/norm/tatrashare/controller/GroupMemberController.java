@@ -13,7 +13,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/groups/{groupId}/members")
 @RequiredArgsConstructor
-@CrossOrigin(origins = "http://localhost:5175")
+@CrossOrigin(origins = "http://localhost:5173")
 public class GroupMemberController {
 
     private final GroupUserService groupUserService;

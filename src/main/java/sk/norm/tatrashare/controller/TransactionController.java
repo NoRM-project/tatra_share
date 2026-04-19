@@ -12,7 +12,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/groups/{groupId}/transactions")
 @RequiredArgsConstructor
-@CrossOrigin(origins = "http://localhost:5175")
+@CrossOrigin(origins = "http://localhost:5173")
 public class TransactionController {
 
     private final TransactionService transactionService;

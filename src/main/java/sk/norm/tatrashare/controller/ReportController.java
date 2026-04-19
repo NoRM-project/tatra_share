@@ -9,7 +9,7 @@ import sk.norm.tatrashare.service.ReportService;
 @RestController
 @RequestMapping("/api/groups/{groupId}/report")
 @RequiredArgsConstructor
-@CrossOrigin(origins = "http://localhost:5175")
+@CrossOrigin(origins = "http://localhost:5173")
 public class ReportController {
 
 	private final ReportService reportService;
