@@ -3,7 +3,7 @@ import BackIcon from "../assets/icons/BackIcon";
 import { useNavigate } from "react-router-dom";
 import "../style/ArrowWithText.css"
 
-export default function ArrowWithText({ label }: { label: string }) {
+export default function ArrowWithText({ label, to }: { label: string; to?: string }) {
   const navigate = useNavigate();
 
   return (
@@ -11,7 +11,7 @@ export default function ArrowWithText({ label }: { label: string }) {
       <Button
         hasBackground={false}
         icon={<BackIcon />}
-        onClick={() => navigate(-1)}
+        onClick={() => to ? navigate(to) : navigate(-1)}
       />
       <h2>{label}</h2>
     </div>

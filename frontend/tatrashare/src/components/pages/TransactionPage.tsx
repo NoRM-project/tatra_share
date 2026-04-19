@@ -1,23 +1,28 @@
 import { useState } from "react";
+import { useLocation } from "react-router-dom";
 import MobileHeader from "../MobileHeader";
 import ShareTransactions from "./ShareTransactions";
 import "../../style/TransactionPage.css";
 import ArrowWithText from "../ArrowWithText.tsx";
+import type { TransactionItem } from "./TransactionsListPage";
 
 export default function TransactionPage() {
+  const location = useLocation();
+  const tx = (location.state as { transaction?: TransactionItem } | null)?.transaction;
+
   const [isShareOpen, setIsShareOpen] = useState(false);
 
-  const payload = {
-    name: "VE POS nakup",
-    description: "VE POS nakup",
-    amount: 184.0,
+  const sharePayload = {
+    name: tx?.description ?? "Transaction",
+    description: tx?.statementDetail ?? "",
+    amount: tx ? parseFloat(tx.amount.replace(",", ".")) : 0,
     beneficiary_ids: [],
   };
 
   return (
       <div className="transactionPage">
         <MobileHeader
-            left={<ArrowWithText label="Transaction detail" />}
+            left={<ArrowWithText label="Transaction detail" to="/transactionslist" />}
             right={
               <button
                   className="transactionSplitButton"
@@ -31,11 +36,15 @@ export default function TransactionPage() {
 
         <main className="transactionPageContent">
           <section className="transactionSummaryCard">
-            <div className="transactionSmallText">Platba kartou 4444**3333</div>
-            <div className="transactionMerchant">PEPCO 120083 KOSICE</div>
+            {tx?.cardNumber && (
+              <div className="transactionSmallText">Platba kartou {tx.cardNumber}</div>
+            )}
+            <div className="transactionMerchant">{tx?.merchant ?? "—"}</div>
 
             <div className="transactionAmountLabel">Amount</div>
-            <div className="transactionAmountValue expense">- 1,30 EUR</div>
+            <div className={`transactionAmountValue ${tx?.isIncome ? "" : "expense"}`}>
+              {tx?.isIncome ? "+ " : "- "}{tx?.amount ?? "0,00"} EUR
+            </div>
           </section>
 
           <section className="transactionUtilityBlock">
@@ -44,56 +53,60 @@ export default function TransactionPage() {
               <div className="transactionPdfText">Export to PDF</div>
             </div>
 
-            <button className="transactionImpactCard" type="button">
-              <div className="transactionImpactLeft">
-                <div className="transactionImpactBadge">co2</div>
-                <div>
-                  <div className="transactionImpactValue">1,49 kg CO₂e</div>
-                  <div className="transactionImpactDescription">
-                    Equal to a short-distance flight of 8 kilometres.
+            {tx?.co2 && (
+              <button className="transactionImpactCard" type="button">
+                <div className="transactionImpactLeft">
+                  <div className="transactionImpactBadge">co2</div>
+                  <div>
+                    <div className="transactionImpactValue">{tx.co2}</div>
+                    <div className="transactionImpactDescription">
+                      Estimated carbon footprint of this transaction.
+                    </div>
                   </div>
                 </div>
-              </div>
-
-              <div className="transactionChevron">›</div>
-            </button>
+                <div className="transactionChevron">›</div>
+              </button>
+            )}
           </section>
 
           <section className="transactionDetailsCard">
             <div className="transactionDetailRow">
               <span className="transactionDetailKey">Posting date</span>
-              <span className="transactionDetailVal">18.04.2026</span>
+              <span className="transactionDetailVal">{tx?.postingDate ?? "—"}</span>
             </div>
 
             <div className="transactionDetailRow">
               <span className="transactionDetailKey">Value date</span>
-              <span className="transactionDetailVal">16.04.2026</span>
+              <span className="transactionDetailVal">{tx?.valueDate ?? "—"}</span>
             </div>
 
             <div className="transactionDetailRow">
               <span className="transactionDetailKey">Type of transaction</span>
-              <span className="transactionDetailVal">Debit</span>
+              <span className="transactionDetailVal">{tx?.transactionType ?? "—"}</span>
             </div>
 
             <div className="transactionDetailRow transactionDetailRowTall">
               <span className="transactionDetailKey">Merchant</span>
               <span className="transactionDetailVal transactionDetailValRight">
-              PEPCO 120083 KOSICE
-              <br />
-              KOSICE
-            </span>
+                {tx?.merchant ?? "—"}
+                {tx?.merchantCity && tx.merchantCity !== "—" && (
+                  <><br />{tx.merchantCity}</>
+                )}
+              </span>
             </div>
 
             <div className="transactionDetailBlock">
               <div className="transactionDetailKey">Statement detail</div>
-              <div className="transactionStatementText">Detail is not available.</div>
+              <div className="transactionStatementText">
+                {tx?.statementDetail ?? "Detail is not available."}
+              </div>
             </div>
           </section>
         </main>
 
         {isShareOpen && (
             <ShareTransactions
-                transactionToShare={payload}
+                transactionToShare={sharePayload}
                 onClose={() => setIsShareOpen(false)}
             />
         )}

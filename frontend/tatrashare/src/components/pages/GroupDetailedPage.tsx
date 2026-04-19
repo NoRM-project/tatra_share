@@ -105,7 +105,7 @@ export default function GroupDetailedPage() {
 
     return <>
         <MobileHeader
-            left={<ArrowWithText label={loading ? 'Loading...' : (group ? group.name : 'Group not found')} />}
+            left={<ArrowWithText label={loading ? 'Loading...' : (group ? group.name : 'Group not found')} to="/groups" />}
             right={<Button hasBackground={false} icon={<QrCode/>} />}
         />
 
@@ -217,15 +217,25 @@ export default function GroupDetailedPage() {
         {members === null && <div>Loading members...</div>}
         {members && members.length === 0 && <div>No members</div>}
 
-        <SecondaryTitle label="Items" button={<Button hasBackground={false} text="Share link"/>}/>
-        {members && members.map((m) => (
-        <MemberContainer
-            key={m.id}
-            fullName={m.full_name}
-            iban={m.iban}
-            isReport={false}
-        />
-        ))}
+        {members && (
+            <>
+                <SecondaryTitle
+                    label={`MEMBERS(${members.length})`}
+                    button={<Button hasBackground={false} text="Manage members"/>}
+                />
+                {members.map((m) => (
+                    <MemberContainer
+                        key={m.id}
+                        fullName={m.full_name}
+                        iban={m.iban}
+                        isReport={false}
+                    />
+                ))}
+                <button type="button" className="leaveGroupBtn">
+                    Leave group
+                </button>
+            </>
+        )}
     </div>
     )}
     {activeTab === "transactions" && (
