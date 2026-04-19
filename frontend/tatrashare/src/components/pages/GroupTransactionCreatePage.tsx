@@ -9,6 +9,8 @@ import type {
   TransactionUserDto,
   CreateTransactionRequest,
 } from "../../axios/api";
+import ArrowWithText from "../ArrowWithText";
+import Avatar from "../Avatar";
 
 type LocationState = {
   selectedGroup?: GroupDto;
@@ -127,18 +129,7 @@ export default function GroupTransactionCreatePage() {
 
   return (
       <div className="transactionsPage">
-        <MobileHeader
-            left={
-              <Link
-                  to={`/groups/${parsedGroupId}`}
-                  className="headerIconButton"
-                  aria-label="Back to group"
-              >
-                <ArrowLeft size={24} strokeWidth={1.8} />
-              </Link>
-            }
-            center={<span className="transactionsHeaderTitle">Tatrashare payment</span>}
-        />
+        <MobileHeader left={<ArrowWithText label="Tatrashare payment"/>}/>
 
         <main style={{ padding: 12, display: "flex", flexDirection: "column", gap: 16 }}>
           {loading && <div>Loading...</div>}
@@ -210,14 +201,7 @@ export default function GroupTransactionCreatePage() {
                               }}
                           >
                             <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
-                              <div
-                                  style={{
-                                    width: 32,
-                                    height: 32,
-                                    borderRadius: "50%",
-                                    border: "1px solid #999",
-                                  }}
-                              />
+                              <Avatar name={member.full_name}/>
                               <div>
                                 <div style={{ fontWeight: 600 }}>{member.full_name}</div>
                                 <div style={{ fontSize: 12, color: "#666" }}>{member.iban}</div>

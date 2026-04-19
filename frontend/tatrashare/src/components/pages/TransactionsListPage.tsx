@@ -4,7 +4,7 @@ import ComponentsBlock from "../ComponentsBlock";
 import MobileFooter from "../MobileFooter";
 import MobileHeader from "../MobileHeader";
 import "../../style/TransactionsListPage.css";
-import BackIcon from "../../assets/icons/BackIcon";
+import ArrowWithText from "../ArrowWithText";
 
 interface TransactionItem {
   id: string;
@@ -87,12 +87,7 @@ export default function TransactionsListPage() {
   return (
     <div className="transactionsPage">
       <MobileHeader
-        left={
-          <Link to="/" className="headerIconButton" aria-label="Back to home">
-            <BackIcon />
-          </Link>
-        }
-        center={<span className="transactionsHeaderTitle">Pohyby na ucte</span>}
+        left={<ArrowWithText label="Tranzactions"/>}
         right={
           <button className="headerIconButton" type="button" aria-label="Search transactions">
             <Search size={22} strokeWidth={1.8} />

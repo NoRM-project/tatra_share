@@ -1,0 +1,55 @@
+.groupContainer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  text-align: left;
+
+  background: #1d1e23;
+  padding: 16px;
+  border-radius: 8px;
+
+  margin-bottom: 12px;
+}
+
+.groupLeft {
+  display: flex;
+  flex-direction: column;
+}
+
+.groupLeft h2 {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 600;
+  color: white;
+}
+
+.groupMembers {
+  margin: 4px 0 0;
+  color: #acadb1;
+  font-size: 14px;
+}
+
+.groupAmount {
+  font-size: 18px;
+  font-weight: 600;
+}
+
+.groupAmount.positive {
+  color: #00c48c;
+}
+
+.groupAmount.negative {
+  color: #ff3b5c;
+}
+
+.groupsList {
+  padding: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.groupLink {
+  text-decoration: none;
+  color: inherit;
+}

@@ -6,6 +6,8 @@ import "../../style/TransactionsListPage.css";
 import { useEffect, useState } from "react";
 import { groupApi } from "../../axios/api";
 import type { GroupDto, CreateTransactionRequest } from "../../axios/api";
+import BackIcon from "../../assets/icons/BackIcon";
+import ArrowWithText from "../ArrowWithText";
 
 type ShareState = {
   transactionToShare?: CreateTransactionRequest;
@@ -54,12 +56,7 @@ export default function ShareTransactions() {
   return (
     <div className="transactionsPage">
       <MobileHeader
-        left={
-          <Link to="/transactiondetail" className="headerIconButton" aria-label="Back to transaction detail">
-            <BackIcon />
-          </Link>
-        }
-        center={<span className="transactionsHeaderTitle">Share transaction</span>}
+        left={<ArrowWithText label="Share transaction"/>}
       />
 
       <main className="transactionDetailContent">
