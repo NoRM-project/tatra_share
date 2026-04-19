@@ -1,7 +1,7 @@
 import { ArrowLeft } from "lucide-react"
 import Button from "./Button"
 
-export default function ArrowWithText (label: string) {
+export default function ArrowWithText ({ label } : {label: string}) {
     return <div>
         <Button hasBackground={false} icon={<ArrowLeft/>} />
         <h2>{label}</h2>
