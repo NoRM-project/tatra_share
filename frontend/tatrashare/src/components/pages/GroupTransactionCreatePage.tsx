@@ -1,7 +1,6 @@
-import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { useEffect, useMemo, useState } from "react";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 import MobileHeader from "../MobileHeader";
-import MobileFooter from "../MobileFooter";
 import { groupApi, groupMemberApi, transactionApi } from "../../axios/api";
 import type {
   GroupDto,
@@ -10,6 +9,7 @@ import type {
 } from "../../axios/api";
 import ArrowWithText from "../ArrowWithText";
 import Avatar from "../Avatar";
+import "../../style/GroupTransactionCreatePage.css";
 
 type LocationState = {
   selectedGroup?: GroupDto;
@@ -22,7 +22,6 @@ export default function GroupTransactionCreatePage() {
   const location = useLocation();
 
   const state = (location.state ?? {}) as LocationState;
-
   const parsedGroupId = Number(groupId);
 
   const [group, setGroup] = useState<GroupDto | null>(state.selectedGroup ?? null);
@@ -58,7 +57,9 @@ export default function GroupTransactionCreatePage() {
         if (!mounted) return;
 
         const foundGroup =
-            groupsRes.data.find((g) => g.id === parsedGroupId) ?? state.selectedGroup ?? null;
+            groupsRes.data.find((g) => g.id === parsedGroupId) ??
+            state.selectedGroup ??
+            null;
 
         setGroup(foundGroup);
         setMembers(membersRes.data);
@@ -116,7 +117,6 @@ export default function GroupTransactionCreatePage() {
       };
 
       await transactionApi.createTransaction(parsedGroupId, payload);
-
       navigate(`/groups/${parsedGroupId}`);
     } catch (err: unknown) {
       const message = err instanceof Error ? err.message : String(err);
@@ -127,44 +127,41 @@ export default function GroupTransactionCreatePage() {
   }
 
   return (
-      <div className="transactionsPage">
-        <MobileHeader left={<ArrowWithText label="Tatrashare payment"/>}/>
+      <div className="groupTransactionPage">
+        <MobileHeader left={<ArrowWithText label="Tatrashare payment" />} />
 
-        <main style={{ padding: 12, display: "flex", flexDirection: "column", gap: 16 }}>
-          {loading && <div>Loading...</div>}
-          {error && <div style={{ color: "red" }}>{error}</div>}
+        <main className="groupTransactionContent">
+          {loading && <div className="groupTransactionState">Loading...</div>}
+          {error && <div className="groupTransactionError">{error}</div>}
 
           {!loading && !error && (
               <>
-                <section
-                    style={{
-                      border: "1px solid #ccc",
-                      borderRadius: 8,
-                      padding: 12,
-                    }}
-                >
-                  <h3 style={{ marginTop: 0 }}>Payment info</h3>
+                <section className="transactionSection">
+                  <h3 className="transactionSectionTitle">Payment details</h3>
 
-                  <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
+                  <div className="transactionForm">
                     <input
+                        className="transactionInput"
                         type="text"
-                        placeholder="Name"
+                        placeholder="Payment name"
                         value={name}
                         onChange={(e) => setName(e.target.value)}
                     />
 
-                    <div style={{ display: "flex", gap: 8 }}>
+                    <div className="transactionAmountRow">
                       <input
+                          className="transactionInput transactionAmountInput"
                           type="number"
                           placeholder="Amount"
                           value={amount}
                           onChange={(e) => setAmount(e.target.value)}
-                          style={{ flex: 1 }}
                       />
-                      <input value="EURO" disabled style={{ width: 80 }} />
+
+                      <div className="transactionCurrencyBox">EUR</div>
                     </div>
 
                     <textarea
+                        className="transactionTextarea"
                         placeholder="Description"
                         value={description}
                         onChange={(e) => setDescription(e.target.value)}
@@ -173,73 +170,59 @@ export default function GroupTransactionCreatePage() {
                   </div>
                 </section>
 
-                <section
-                    style={{
-                      border: "1px solid #ccc",
-                      borderRadius: 8,
-                      padding: 12,
-                    }}
-                >
-                  <h3 style={{ marginTop: 0 }}>Beneficiaries</h3>
+                <section className="transactionSection">
+                  <h3 className="transactionSectionTitle">
+                    PAYING FOR ({members.length})
+                  </h3>
 
-                  <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
+                  <div className="beneficiariesList">
                     {members.map((member) => {
                       const checked = selectedBeneficiaryIds.includes(member.id);
 
                       return (
                           <label
                               key={member.id}
-                              style={{
-                                display: "flex",
-                                alignItems: "center",
-                                justifyContent: "space-between",
-                                border: "1px solid #ddd",
-                                borderRadius: 8,
-                                padding: 10,
-                                cursor: "pointer",
-                              }}
+                              className={`beneficiaryCard ${checked ? "isSelected" : ""}`}
                           >
-                            <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
-                              <Avatar name={member.full_name}/>
-                              <div>
-                                <div style={{ fontWeight: 600 }}>{member.full_name}</div>
-                                <div style={{ fontSize: 12, color: "#666" }}>{member.iban}</div>
+                            <div className="beneficiaryLeft">
+                              <Avatar name={member.full_name} />
+                              <div className="beneficiaryInfo">
+                                <div className="beneficiaryName">{member.full_name}</div>
+                                <div className="beneficiaryIban">{member.iban}</div>
                               </div>
                             </div>
 
                             <input
+                                className="beneficiaryCheckbox"
                                 type="checkbox"
                                 checked={checked}
                                 onChange={() => toggleBeneficiary(member.id)}
                             />
+
+                            <span className="beneficiaryFakeCheckbox" />
                           </label>
                       );
                     })}
                   </div>
                 </section>
 
-                <section>
-                  <div style={{ marginBottom: 8 }}>
-                    <strong>Selected group:</strong> {group?.name ?? "Unknown"}
-                  </div>
-
-                  <button
-                      onClick={handleSubmit}
-                      disabled={!canSubmit || submitting}
-                      style={{
-                        width: "100%",
-                        padding: "12px 16px",
-                        borderRadius: 8,
-                      }}
-                  >
-                    {submitting ? "Creating..." : "Create transaction"}
-                  </button>
-                </section>
+                <div className="transactionGroupInfo">
+                  Selected group: <span>{group?.name ?? "Unknown"}</span>
+                </div>
               </>
           )}
         </main>
 
-        <MobileFooter />
+        <div className="transactionBottomBar">
+          <button
+              className="transactionSubmitButton"
+              onClick={handleSubmit}
+              disabled={!canSubmit || submitting}
+          >
+            {submitting ? "Creating..." : "Create transaction"}
+          </button>
+        </div>
+
       </div>
   );
 }

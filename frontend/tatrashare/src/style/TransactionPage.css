@@ -1,0 +1,193 @@
+.transactionPage {
+    min-height: 100vh;
+    background: #0a0d14;
+    color: #ffffff;
+}
+
+.transactionPageContent {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding-bottom: 16px;
+}
+
+.transactionHeaderTitle {
+    font-size: 16px;
+    font-weight: 700;
+    color: #ffffff;
+}
+
+.transactionSplitButton {
+    background: transparent;
+    border: none;
+    color: #0a84ff;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.transactionSummaryCard {
+    background: #1a1d27;
+    padding: 16px 14px 16px;
+}
+
+.transactionSmallText {
+    font-size: 12px;
+    color: #7f8797;
+    margin-bottom: 4px;
+    text-align: left;
+}
+
+.transactionMerchant {
+    font-size: 19px;
+    font-weight: 700;
+    color: #ffffff;
+    margin-bottom: 14px;
+    line-height: 1.2;
+    text-align: left;
+}
+
+.transactionAmountLabel {
+    font-size: 14px;
+    color: #8a91a0;
+    margin-bottom: 4px;
+    text-align: left;
+}
+
+.transactionAmountValue {
+    font-size: 26px;
+    font-weight: 400;
+    text-align: left;
+}
+
+.transactionAmountValue.expense {
+    color: #d94a57;
+}
+
+.transactionUtilityBlock {
+    background: #11141c;
+    padding: 16px 10px 12px;
+}
+
+.transactionPdfWrap {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 16px;
+}
+
+.transactionPdfIcon {
+    width: 58px;
+    height: 58px;
+    border-radius: 16px;
+    background: #1c202b;
+    color: #0a84ff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    font-weight: 700;
+    margin-bottom: 8px;
+}
+
+.transactionPdfText {
+    font-size: 12px;
+    color: #d7dae2;
+}
+
+.transactionImpactCard {
+    width: 100%;
+    border: none;
+    background: #1b1f2a;
+    border-radius: 12px;
+    padding: 14px 14px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    color: white;
+    cursor: pointer;
+    text-align: left;
+}
+
+.transactionImpactLeft {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.transactionImpactBadge {
+    width: 40px;
+    height: 28px;
+    border-radius: 14px;
+    border: 1px solid #0a84ff;
+    color: #0a84ff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: lowercase;
+}
+
+.transactionImpactValue {
+    font-size: 14px;
+    font-weight: 700;
+    color: #e8ebf2;
+    margin-bottom: 2px;
+}
+
+.transactionImpactDescription {
+    font-size: 12px;
+    color: #767e90;
+    max-width: 220px;
+}
+
+.transactionChevron {
+    font-size: 26px;
+    color: #0a84ff;
+    line-height: 1;
+}
+
+.transactionDetailsCard {
+    background: #1a1d27;
+}
+
+.transactionDetailRow {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    padding: 16px 12px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.transactionDetailRowTall {
+    align-items: flex-start;
+}
+
+.transactionDetailKey {
+    font-size: 14px;
+    color: #8a91a0;
+}
+
+.transactionDetailVal {
+    font-size: 14px;
+    color: #ffffff;
+    font-weight: 600;
+}
+
+.transactionDetailValRight {
+    text-align: right;
+    line-height: 1.35;
+}
+
+.transactionDetailBlock {
+    padding: 16px 12px 18px;
+}
+
+.transactionStatementText {
+    margin-top: 10px;
+    font-size: 15px;
+    color: #ffffff;
+    font-weight: 500;
+}
