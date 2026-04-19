@@ -1,0 +1,50 @@
+.transactionGroup {
+  margin-bottom: 16px;
+  background-color: #1D1E23;
+  text-align: left;
+  padding: 8px 16px;
+}
+
+.transactionDate {
+  font-size: 14px;
+  color: #aaa;
+  margin: 8px 0;
+}
+
+/* item */
+.transactionItem {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  padding: 12px 0;
+  border-top: 2px solid #2a2d33;
+}
+
+/* left side */
+.transactionLeft {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+/* text */
+.transactionTitle {
+  font-weight: 500;
+  color: white;
+}
+
+.transactionSub {
+  font-size: 12px;
+  color: #aaa;
+}
+
+/* amount */
+.transactionAmount {
+  font-weight: 500;
+  color: white;
+}
+
+.transaction-icon {
+    color: #FFD764;
+}

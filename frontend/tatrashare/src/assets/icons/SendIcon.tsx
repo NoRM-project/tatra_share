@@ -1,6 +1,6 @@
 type IconProps = {
   size?: number;
-  className: string
+  className?: string
 };
 
 export default function SendIcon({ size = 24, className }: IconProps) {
